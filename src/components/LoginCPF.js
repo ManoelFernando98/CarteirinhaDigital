@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 
-import api from './api';
-
 export default class App extends Component{
 
   clicou = () => {

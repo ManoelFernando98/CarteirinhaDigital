@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Image, Text, StyleSheet, View, useWindowDimensions } from 'react-native'
+import { Image, Text, StyleSheet, View, useWindowDimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 
 export default function Home(){ 
@@ -12,7 +12,7 @@ export default function Home(){ 
       <View style={styles.background}>  
           <View style={styles.containerFoto}>
           <Image
-            style={[ styles.foto]}
+            style={[styles.foto]}
             source ={require('../components/logoPersonagem.jpeg')}
           />
           </View>
@@ -34,6 +34,16 @@ export default function Home(){ 
           color="black"
         />
         </View> 
+
+        <View style={[styles.containerCadastro]}>
+        <TouchableOpacity onPress={() => {}}>
+          <Image
+          style={[styles.cadastro]}
+          source ={require('../components/Cadastro.png')}
+          />
+        </TouchableOpacity>
+        </View>
+
       </View>
   );
 }
@@ -51,6 +61,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 30
   },
+  containerCadastro:{
+
+  },
+  cadastro:{
+    //flex: 1,
+    width: 50,
+    height: 50,
+    marginBottom: 5,
+    marginTop: 5,
+  },
   containerFoto:{
     flex: 1,
     flexDirection: 'column',
@@ -67,8 +87,9 @@ const styles = StyleSheet.create({
     height: 340
   },
   containerNome:{
-    width: 30, 
-    height: 225
+    width: 20, 
+    height: 175,
+    marginBottom: 5,
   },
   QRCode:{
     flex:1,

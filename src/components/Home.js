@@ -1,12 +1,15 @@
-import React, {useState} from 'react'
-import { Image, Text, StyleSheet, View, useWindowDimensions, TouchableOpacity} from 'react-native'
+import React, { Component } from 'react'
+import { Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 
-export default function Home(){ 
-  const QRCodeSize = useWindowDimensions().width * 0.60;
-  const InsertText = '119804' ;
-  //let LogoSanta = require('./src/components/LogoUnisanta.jpg');
-	
+
+const QRCodeSize = Dimensions.get("window").width * 0.70;
+
+export default class Home extends React.Component { 
+  
+  render(){
+    
+    //const InsertText = '119804' ;
 	return (
       
       <View style={styles.background}>  
@@ -19,7 +22,7 @@ export default function Home(){ 
 
           <View style={styles.containerNome}>
           <Text style={styles.textNome}>
-            Isabella Gasperini Rivelli{'\n'}
+            Manoel Fernando Thomaz Lopes Conceição da Silva {'\n'}
             R.A: 119804 {'\n'}
             Eng. Química {'\n'}
           </Text>
@@ -28,7 +31,7 @@ export default function Home(){ 
         <View style={styles.containerQRCode}>
         <QRCode
           style={styles.QRCode}
-          value={InsertText}
+          value={'119804'}
           size={QRCodeSize}
           backgroundColor="white"
           color="black"
@@ -36,17 +39,19 @@ export default function Home(){ 
         </View> 
 
         <View style={[styles.containerCadastro]}>
-        <TouchableOpacity onPress={() => {}}>
-          <Image
-          style={[styles.cadastro]}
-          source ={require('../components/Cadastro.png')}
-          />
-        </TouchableOpacity>
-        </View>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
+            <Image
+            style={[styles.cadastro]}
+            source ={require('../components/Cadastro.png')}
+            />
+          </TouchableOpacity>
+        </View>        
 
       </View>
   );
+  }
 }
+
 
 const styles = StyleSheet.create({
   background:{
@@ -58,11 +63,11 @@ const styles = StyleSheet.create({
   foto:{
     width: 160,
     height: 170,
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 30
   },
   containerCadastro:{
-
+    width: 350
   },
   cadastro:{
     //flex: 1,
@@ -75,8 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: 380, 
-    height: 380
+    width: 380
   },
   containerQRCode:{
     alignItems: 'center',
@@ -84,21 +88,20 @@ const styles = StyleSheet.create({
     width:'90%',
     backgroundColor: '#FFFF',
     borderRadius: 20,
-    height: 340
+    height: 350
   },
   containerNome:{
-    width: 20, 
+    width: 24, 
     height: 175,
-    marginBottom: 5,
+    marginBottom: 10,
   },
   QRCode:{
     flex:1,
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 100
+    justifyContent: 'center'
   },
   textNome:{
-    fontSize: 26,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#FFFF',
     width:260,

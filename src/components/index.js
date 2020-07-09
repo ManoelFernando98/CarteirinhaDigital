@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import LoginCPF from './LoginCPF';
 import LoginRA from './LoginRA';
 import Home from './Home';
+import Cadastro from './Cadastro';
 
 const MainNav = createStackNavigator (
   {
@@ -22,8 +23,14 @@ const MainNav = createStackNavigator (
         LoginCPF:{
           screen: LoginCPF,
           navigationOptions: {
-          headerShown: false
-        }
+            headerShown: false
+        },
+        Cadastro: {
+          screen: Cadastro,
+          navigationOptions:{
+            headerTitle: 'Cadastrar Aluno'
+          }
+        },
       }
   }
 )

@@ -5,6 +5,7 @@ import LoginCPF from './LoginCPF';
 import LoginRA from './LoginRA';
 import Home from './Home';
 import Cadastro from './Cadastro';
+import { Button } from 'react-native';
 
 const MainNav = createStackNavigator (
   {
@@ -23,15 +24,15 @@ const MainNav = createStackNavigator (
         LoginCPF:{
           screen: LoginCPF,
           navigationOptions: {
-            headerShown: false
-        },
-        Cadastro: {
-          screen: Cadastro,
-          navigationOptions:{
-            headerTitle: 'Cadastrar Aluno'
-          }
-        },
-      }
+          headerShown: false
+        }
+      },
+      Cadastro: {
+        screen: Cadastro,
+        navigationOptions:{
+          headerTitle: 'Cadastro'
+        }
+      },
   }
 )
 

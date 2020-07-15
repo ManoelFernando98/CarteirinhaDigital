@@ -1,44 +1,74 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 
-export default class App extends Component{
+
+export default class LoginCPF extends React.Component{
+
+ /* CPF = useState('')
+  setCPF  = useState('')
+  password  = useState('')
+  setPassword  = useState('')
+
+sendCred = () =>{
+  fetch("http://10.0.2.2:3030/usuarios/",{
+    method:"POST",
+    headers: {
+     'Content-Type': 'application/json'
+   },
+   body:JSON.stringify({
+     "codigo":CPF,
+     "senha":password
+   })
+  })
+  .then(res=>res.json())
+  .then(()=>{
+         try {
+           props.navigation.replace("Home")
+         } catch (e) {
+          Alert.alert("Atenção!","CPF ou senha inválidos.");
+         }
+  })
+} */
 
   clicou = () => {
     Alert.alert("Atenção","Digite seu RA");
   }
+/*
+  constructor(props) {
+    super(props);
+    this.state = {
+        CPF: '',
+        Senha: ''
+    };
+  }
 
-  static navigationOptions = {
-    header: null,
-  };
-
-  state = { CPF: '', Senha: ''};
-
-  handleCPFChange = (CPF) => {
-    this.setState({ CPF });
-  };
-  
-  handleSenhaChange = (Senha) => {
-    this.setState({ Senha });
-  };
-
-  handleSignInPress = async () => {
+  handleSignInPress = () => {
     if (this.state.CPF.length == 0 || this.state.Senha.length == 0) {
-      Alert.alert("Atenção","Preencha CPF e senha para continuar!");
-    } else {
-        const response = await api.get('/usuarios/', {
-          CPF: this.state.CPF,
-          Senha: this.state.Senha,
-        });
-        
-        if(handleCPFChange == CPF && handleSenhaChange == Senha)
+      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
+    } else{
+      fetch("http://10.0.2.2:3030/usuarios" + "/:CPF")
+      .then( res => res.json())
+      .then( res => {
+        this.setState({
+          cpf: res.CPF.cpf,
+          senha: res.CPF.senha,
+        })
+          
+      })
+    }
+
+    if(response.cpf == CPF && response.senha == Senha)
           this.props.navigation.navigate('Home');
         else
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+        
+        
 
-    }
-  };
-
+    }*/
+  
   render(){
+    
+
     return(
       <KeyboardAvoidingView style={styles.background}>
         <View style={styles.containerLogo}>
@@ -57,7 +87,7 @@ export default class App extends Component{
           autoCorrect={false}
           placeholder="CPF"
           value={this.state.CPF}
-          onChangeText={this.handleCPFChange}
+          onChangeText={CPF => {this.setState({CPF})}}
         />
   
         <TextInput
@@ -66,13 +96,13 @@ export default class App extends Component{
           placeholder="Senha"
           keyboardType="numeric"
           autoCorrect={false}
-          onChangeText = {this.handleSenhaChange}
           value={this.state.Senha}
+          onChangeText={Senha => {this.setState({Senha})}}
         />
   
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => { this.handleSignInPress}}
+          onPress={() => {this.handleSignInPress()}}
         >
           <Text style={styles.botaoText}>Login</Text>
         </TouchableOpacity>

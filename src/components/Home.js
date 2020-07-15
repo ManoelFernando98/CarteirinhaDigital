@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
+import { Alert, Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 
 
 const QRCodeSize = Dimensions.get("window").width * 0.70;
 
 export default class Home extends React.Component { 
+
+  clicou = () => {
+    Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
+  }
   
   render(){
     
@@ -22,7 +26,7 @@ export default class Home extends React.Component { 
 
           <View style={styles.containerNome}>
           <Text style={styles.textNome}>
-            Manoel Fernando Thomaz Lopes Conceição da Silva {'\n'}
+            Manoel Fernando Thomaz Lopes Conceição {'\n'}
             R.A: 119804 {'\n'}
             Eng. Química {'\n'}
           </Text>
@@ -36,7 +40,16 @@ export default class Home extends React.Component { 
           backgroundColor="white"
           color="black"
         />
-        </View> 
+        </View>
+
+        <View style={[styles.sobreContainer]}>
+          <TouchableOpacity onPress={() => {this.clicou()}}>
+            <Image
+            style={[styles.sobre]}
+            source ={require('../components/sobre.png')}
+            />
+          </TouchableOpacity>
+        </View>
 
         <View style={[styles.containerCadastro]}>
           <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
@@ -45,7 +58,9 @@ export default class Home extends React.Component { 
             source ={require('../components/Cadastro.png')}
             />
           </TouchableOpacity>
-        </View>        
+
+          
+        </View> 
 
       </View>
   );
@@ -74,7 +89,16 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     marginBottom: 5,
-    marginTop: 5,
+    marginTop: -45,
+  },
+  sobre:{
+    width: 50,
+    height: 50
+  },
+  sobreContainer:{
+    marginTop: 3,
+    marginBottom: -7,
+    marginRight: -300
   },
   containerFoto:{
     flex: 1,
@@ -104,7 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: 'bold',
     color: '#FFFF',
-    width:260,
-    height:150
+    width:'900%',
+    height:'150%'
   }
 })

@@ -13,7 +13,7 @@
     "@react-native-community/masked-view": "^0.1.9",
     "@react-navigation/native": "^5.1.6",
     "axios": "^0.19.2",
-    "express": "^4.17.1",
+    "events": "^3.1.0",
     "formik": "^2.1.4",
     "jdk": "0.0.0",
     "jquery": "^3.5.1",

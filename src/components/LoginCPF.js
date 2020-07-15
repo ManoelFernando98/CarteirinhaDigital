@@ -33,7 +33,7 @@ sendCred = () =>{
   clicou = () => {
     Alert.alert("Atenção","Digite seu RA");
   }
-/*
+
   constructor(props) {
     super(props);
     this.state = {
@@ -57,14 +57,14 @@ sendCred = () =>{
       })
     }
 
-    if(response.cpf == CPF && response.senha == Senha)
+    /*if(response.cpf == CPF && response.senha == Senha)
           this.props.navigation.navigate('Home');
         else
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
-        
+     */   
         
 
-    }*/
+    }
   
   render(){
     

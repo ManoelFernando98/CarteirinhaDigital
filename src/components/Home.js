@@ -13,7 +13,6 @@ export default class Home extends React.Component { 
   
   render(){
     
-    //const InsertText = '119804' ;
 	return (
       
       <View style={styles.background}>  
@@ -58,8 +57,6 @@ export default class Home extends React.Component { 
             source ={require('../components/Cadastro.png')}
             />
           </TouchableOpacity>
-
-          
         </View> 
 
       </View>
@@ -82,14 +79,15 @@ const styles = StyleSheet.create({
     borderRadius: 30
   },
   containerCadastro:{
-    width: 350
+    width: 30,
+    marginTop: -45,
+    marginRight: 320
   },
   cadastro:{
     //flex: 1,
     width: 50,
     height: 50,
     marginBottom: 5,
-    marginTop: -45,
   },
   sobre:{
     width: 50,
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
   sobreContainer:{
     marginTop: 3,
     marginBottom: -7,
-    marginRight: -300
+    marginRight: -320
   },
   containerFoto:{
     flex: 1,

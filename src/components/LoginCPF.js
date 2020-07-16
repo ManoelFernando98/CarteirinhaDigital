@@ -1,9 +1,9 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Redirect } from 'react-router-native';
 
 
 export default class LoginCPF extends React.Component{
-
  /* CPF = useState('')
   setCPF  = useState('')
   password  = useState('')
@@ -42,7 +42,39 @@ sendCred = () =>{
     };
   }
 
-  handleSignInPress = () => {
+  updateValue (text, field)  {
+    if(field == 'CPF'){
+      this.setState({
+        CPF: text,
+      })
+    } else if(field == 'Senha'){
+      this.setState({
+        Senha: text,
+      })
+    }
+  }
+
+  submit(){
+    let collection = {}
+    collection.CPF = this.state.CPF,
+    collection.Senha = this.state.Senha
+    console.warn(collection);
+
+    /*
+    var url = "http://localhost:3030/usuarios" + "/" + CPF;
+    fetch(url)
+    .then(res => res.json())
+    .then(res => {
+      this.setstate ({
+        CPF: res.cpf,
+        Senha: res.senha
+      })
+    });*/
+
+  }  
+
+  /*handleSignInPress = () => {
+
     if (this.state.CPF.length == 0 || this.state.Senha.length == 0) {
       Alert.alert("Atenção!","Preencha CPF e senha para continuar");
     } else{
@@ -64,7 +96,7 @@ sendCred = () =>{
      */   
         
 
-    }
+    
   
   render(){
     
@@ -86,8 +118,7 @@ sendCred = () =>{
           keyboardType="numeric"
           autoCorrect={false}
           placeholder="CPF"
-          value={this.state.CPF}
-          onChangeText={CPF => {this.setState({CPF})}}
+          onChangeText={(text) => this.updateValue(text,'CPF')}
         />
   
         <TextInput
@@ -96,13 +127,12 @@ sendCred = () =>{
           placeholder="Senha"
           keyboardType="numeric"
           autoCorrect={false}
-          value={this.state.Senha}
-          onChangeText={Senha => {this.setState({Senha})}}
+          onChangeText={(text) => this.updateValue(text,'Senha')}
         />
   
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => {this.handleSignInPress()}}
+          onPress={() => {this.submit()}}
         >
           <Text style={styles.botaoText}>Login</Text>
         </TouchableOpacity>

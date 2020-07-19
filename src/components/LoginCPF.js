@@ -1,6 +1,7 @@
 import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { Redirect } from 'react-router-native';
+import axios from 'axios';
 
 
 export default class LoginCPF extends React.Component{
@@ -54,23 +55,53 @@ sendCred = () =>{
     }
   }
 
+  /*getLogin = async() => {
+    let collection = {}
+    collection.CPF = this.state.CPF,
+    collection.Senha = this.state.Senha
+    //console.warn(collection);
+    let cpf;
+    if (collection.CPF.length == 0) 
+      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
+    else{
+      let res = await axios.get("http://localhost:3030/usuarios/cpf" + "/" + collection.CPF,{
+        params:{
+          cpf: cpf,
+        }
+      });
+    setLogin(res.data);
+    console.warn(cpf);
+    }
+    
+  }*/
+
+
   submit(){
     let collection = {}
     collection.CPF = this.state.CPF,
     collection.Senha = this.state.Senha
-    console.warn(collection);
+    //console.warn(collection);
+    let cpf;
 
-    /*
-    var url = "http://localhost:3030/usuarios" + "/" + CPF;
-    fetch(url)
-    .then(res => res.json())
-    .then(res => {
-      this.setstate ({
-        CPF: res.cpf,
-        Senha: res.senha
-      })
-    });*/
-
+    if (collection.CPF.length == 0 /*|| collection.Senha.length == 0))*/) {
+      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
+    } else{
+      var url = "http://localhost:3030/usuarios/cpf" + "/" + collection.CPF;
+      fetch(url)
+      .then(res => res.json())
+      .then(res => {
+       return {
+          cpf: res.usuario.cpf,
+          //Senha_: res.usuarios.senha
+        }
+      });
+      console.warn(cpf);
+      if(collection.CPF == this.CPF_ /*&& collection.Senha == Senha_*/)
+          this.props.navigation.navigate('Home');
+      else
+        Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+    }
+    
   }  
 
   /*handleSignInPress = () => {
@@ -78,21 +109,21 @@ sendCred = () =>{
     if (this.state.CPF.length == 0 || this.state.Senha.length == 0) {
       Alert.alert("Atenção!","Preencha CPF e senha para continuar");
     } else{
-      fetch("http://10.0.2.2:3030/usuarios" + "/:CPF")
+      fetch("http://10.0.2.2:3030/usuarios" + + "/" + CPF)
       .then( res => res.json())
       .then( res => {
         this.setState({
           cpf: res.CPF.cpf,
           senha: res.CPF.senha,
         })
-          
-      })
-    }
-
-    /*if(response.cpf == CPF && response.senha == Senha)
+        if(response.cpf == CPF && response.senha == Senha)
           this.props.navigation.navigate('Home');
         else
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+      })
+    }
+
+    /*
      */   
         
 

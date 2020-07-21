@@ -106,11 +106,7 @@ sendCred = () =>{
      
     }
 
-    /*if(collection.CPF == cpf /*&& collection.Senha == Senha_)
-      this.props.navigation.navigate('Home');
-    else
-      Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
-    */
+
     
    }
 

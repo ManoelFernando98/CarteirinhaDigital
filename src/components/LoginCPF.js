@@ -86,12 +86,15 @@ sendCred = () =>{
     if (collection.CPF == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://10.0.2.2:3030/usuarios/cpf/45589876652";
+      var url = "http://10.0.2.2:3030/usuarios/cpf/" + collection.CPF;
       fetch(url)
-      .then(res => res.json())
-      .then(data => cpf = data.usuario[0].cpf)
+      .then(res => res.json()) //45589876652
+      .then(data => (
+        cpf = data.usuario[0].cpf,
+        senha = data.usuario[0].senha
+        ))
       .then(() => {
-        if(collection.CPF == cpf ){
+        if(collection.CPF == cpf && collection.Senha == senha){
           this.props.navigation.navigate('Home');
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");

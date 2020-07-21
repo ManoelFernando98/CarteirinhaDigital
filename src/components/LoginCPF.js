@@ -38,8 +38,7 @@ sendCred = () =>{
   constructor(props) {
     super(props);
     this.state = {
-        CPF: '',
-        Senha: ''
+        data: []
     };
   }
 
@@ -81,28 +80,41 @@ sendCred = () =>{
     collection.CPF = this.state.CPF,
     collection.Senha = this.state.Senha
     //console.warn(collection);
-    let cpf;
+    var cpf;
+    var senha;
 
-    if (collection.CPF.length == 0 /*|| collection.Senha.length == 0))*/) {
-      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
+    if (collection.CPF == null || collection.Senha == null ) {
+      Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://localhost:3030/usuarios/cpf" + "/" + collection.CPF;
+      var url = "http://10.0.2.2:3030/usuarios/cpf/45589876652";
       fetch(url)
       .then(res => res.json())
-      .then(res => {
-       return {
-          cpf: res.usuario.cpf,
-          //Senha_: res.usuarios.senha
-        }
-      });
-      console.warn(cpf);
-      if(collection.CPF == this.CPF_ /*&& collection.Senha == Senha_*/)
+      .then(data => cpf = data.usuario[0].cpf)
+      .then(() => {
+        if(collection.CPF == cpf ){
           this.props.navigation.navigate('Home');
-      else
-        Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+        }else{
+          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+        }
+      })
+      .catch(function(error){
+        console.warn('There has been a problem with your fetch operation:' + error.message)
+      }
+      );
+      //console.warn(cpf);
+      //console.warn(cpf);
+     
     }
+
+    /*if(collection.CPF == cpf /*&& collection.Senha == Senha_)
+      this.props.navigation.navigate('Home');
+    else
+      Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+    */
     
-  }  
+   }
+
+    
 
   /*handleSignInPress = () => {
 

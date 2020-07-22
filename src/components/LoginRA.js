@@ -28,6 +28,7 @@ export default class App extends Component{
           autoCorrect={false}
           placeholder="RA"
           onChangeText={() => {}}
+          maxLength={6}
         />
   
         <TextInput
@@ -37,6 +38,7 @@ export default class App extends Component{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText = {() => {}}
+          maxLength={6}
         />
   
         <TouchableOpacity

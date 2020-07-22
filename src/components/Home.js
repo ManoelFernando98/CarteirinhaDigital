@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Alert, Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
-
+import LoginCPF from './LoginCPF';
 
 const QRCodeSize = Dimensions.get("window").width * 0.70;
 

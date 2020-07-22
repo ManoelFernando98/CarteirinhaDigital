@@ -1,7 +1,5 @@
 import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-import { Redirect } from 'react-router-native';
-import axios from 'axios';
 
 
 export default class LoginCPF extends React.Component{
@@ -80,16 +78,18 @@ sendCred = () =>{
     collection.CPF = this.state.CPF,
     collection.Senha = this.state.Senha
     //console.warn(collection);
+    var obj;
     var cpf;
     var senha;
 
     if (collection.CPF == null || collection.Senha == null ) {
-      Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
+      Alert.alert("ATENÇÃO","Preencha CPF e Senha para continuar");
     } else{
       var url = "http://10.0.2.2:3030/usuarios/cpf/" + collection.CPF;
       fetch(url)
       .then(res => res.json()) //45589876652
-      .then(data => (
+      .then( data => (
+        obj = data,
         cpf = data.usuario[0].cpf,
         senha = data.usuario[0].senha
         ))
@@ -97,11 +97,11 @@ sendCred = () =>{
         if(collection.CPF == cpf && collection.Senha == senha){
           this.props.navigation.navigate('Home');
         }else{
-          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+          Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        console.warn('There has been a problem with your fetch operation:' + error.message)
+        Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
       }
       );
       //console.warn(cpf);
@@ -141,8 +141,6 @@ sendCred = () =>{
     
   
   render(){
-    
-
     return(
       <KeyboardAvoidingView style={styles.background}>
         <View style={styles.containerLogo}>
@@ -161,6 +159,7 @@ sendCred = () =>{
           autoCorrect={false}
           placeholder="CPF"
           onChangeText={(text) => this.updateValue(text,'CPF')}
+          maxLength={11}
         />
   
         <TextInput
@@ -170,6 +169,7 @@ sendCred = () =>{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText={(text) => this.updateValue(text,'Senha')}
+          maxLength={6}
         />
   
         <TouchableOpacity

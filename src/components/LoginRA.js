@@ -9,6 +9,65 @@ export default class App extends Component{
     Alert.alert("Atenção","Digite seu CPF");
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+        data: []
+    };
+  }
+
+  updateValue (text, field)  {
+    if(field == 'RA'){
+      this.setState({
+        RA: text,
+      })
+    } else if(field == 'Senha'){
+      this.setState({
+        Senha: text,
+      })
+    }
+  }
+
+  submit(){
+    let collection = {}
+    collection.RA = this.state.RA,
+    collection.Senha = this.state.Senha
+    //console.warn(collection);
+    var obj;
+    var ra;
+    var senha;
+
+    if (collection.RA == null || collection.Senha == null ) {
+      Alert.alert("ATENÇÃO","Preencha CPF e Senha para continuar");
+    } else{
+      var url = "http://10.0.2.2:3030/usuarios/codigo/" + collection.RA;
+      fetch(url)
+      .then(res => res.json()) //45589876652
+      .then( data => (
+        obj = data,
+        ra = data.usuario[0].codigo,
+        senha = data.usuario[0].senha
+        ))
+      .then(() => {
+        if(collection.RA == ra && collection.Senha == senha){
+          this.props.navigation.navigate('Home');
+        }else{
+          Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+        }
+      })
+      .catch(function(error){
+        Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+      }
+      );
+      //console.warn(cpf);
+      //console.warn(cpf);
+     
+    }
+
+
+    
+   }
+
   render(){
     return(
       <KeyboardAvoidingView style={styles.background}>
@@ -27,7 +86,7 @@ export default class App extends Component{
           keyboardType="numeric"
           autoCorrect={false}
           placeholder="RA"
-          onChangeText={() => {}}
+          onChangeText={(text) => this.updateValue(text, 'RA')}
           maxLength={6}
         />
   
@@ -37,13 +96,13 @@ export default class App extends Component{
           placeholder="Senha"
           keyboardType="numeric"
           autoCorrect={false}
-          onChangeText = {() => {}}
+          onChangeText = {(text) => this.updateValue(text, 'Senha')}
           maxLength={6}
         />
   
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => {this.props.navigation.navigate('Home')}}
+          onPress={() => {this.submit()}}
         >
           <Text style={styles.botaoText}>Login</Text>
         </TouchableOpacity>

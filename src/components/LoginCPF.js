@@ -3,31 +3,6 @@ import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, 
 
 
 export default class LoginCPF extends React.Component{
- /* CPF = useState('')
-  setCPF  = useState('')
-  password  = useState('')
-  setPassword  = useState('')
-
-sendCred = () =>{
-  fetch("http://10.0.2.2:3030/usuarios/",{
-    method:"POST",
-    headers: {
-     'Content-Type': 'application/json'
-   },
-   body:JSON.stringify({
-     "codigo":CPF,
-     "senha":password
-   })
-  })
-  .then(res=>res.json())
-  .then(()=>{
-         try {
-           props.navigation.replace("Home")
-         } catch (e) {
-          Alert.alert("Atenção!","CPF ou senha inválidos.");
-         }
-  })
-} */
 
   clicou = () => {
     Alert.alert("Atenção","Digite seu RA");
@@ -51,27 +26,6 @@ sendCred = () =>{
       })
     }
   }
-
-  /*getLogin = async() => {
-    let collection = {}
-    collection.CPF = this.state.CPF,
-    collection.Senha = this.state.Senha
-    //console.warn(collection);
-    let cpf;
-    if (collection.CPF.length == 0) 
-      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
-    else{
-      let res = await axios.get("http://localhost:3030/usuarios/cpf" + "/" + collection.CPF,{
-        params:{
-          cpf: cpf,
-        }
-      });
-    setLogin(res.data);
-    console.warn(cpf);
-    }
-    
-  }*/
-
 
   submit(){
     let collection = {}
@@ -101,45 +55,12 @@ sendCred = () =>{
         }
       })
       .catch(function(error){
-        Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+        Alert.alert("ATENÇÃO","Usuário não encontrado!");
       }
       );
-      //console.warn(cpf);
-      //console.warn(cpf);
-     
-    }
-
-
-    
+    } 
    }
 
-    
-
-  /*handleSignInPress = () => {
-
-    if (this.state.CPF.length == 0 || this.state.Senha.length == 0) {
-      Alert.alert("Atenção!","Preencha CPF e senha para continuar");
-    } else{
-      fetch("http://10.0.2.2:3030/usuarios" + + "/" + CPF)
-      .then( res => res.json())
-      .then( res => {
-        this.setState({
-          cpf: res.CPF.cpf,
-          senha: res.CPF.senha,
-        })
-        if(response.cpf == CPF && response.senha == Senha)
-          this.props.navigation.navigate('Home');
-        else
-          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
-      })
-    }
-
-    /*
-     */   
-        
-
-    
-  
   render(){
     return(
       <KeyboardAvoidingView style={styles.background}>

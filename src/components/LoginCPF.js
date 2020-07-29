@@ -32,34 +32,41 @@ export default class LoginCPF extends React.Component{
     collection.CPF = this.state.CPF,
     collection.Senha = this.state.Senha
     //console.warn(collection);
-    var obj;
     var cpf;
     var senha;
+    var dadosUsuario;
 
     if (collection.CPF == null || collection.Senha == null ) {
-      Alert.alert("ATENÇÃO","Preencha CPF e Senha para continuar");
+      Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
       var url = "http://10.0.2.2:3030/usuarios/cpf/" + collection.CPF;
       fetch(url)
       .then(res => res.json()) //45589876652
-      .then( data => (
-        obj = data,
+      .then(data => (
+        dadosUsuario = data,
         cpf = data.usuario[0].cpf,
         senha = data.usuario[0].senha
         ))
       .then(() => {
         if(collection.CPF == cpf && collection.Senha == senha){
-          this.props.navigation.navigate('Home');
+          this.props.navigation.navigate('Home',  {
+            nome: dadosUsuario.usuario[0].nome,  
+            ra: dadosUsuario.usuario[0].codigo,  
+            curso: dadosUsuario.usuario[0].curso,  
+          });
         }else{
-          Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        Alert.alert("ATENÇÃO","Usuário não encontrado!");
+        console.warn('There has been a problem with your fetch operation:' + error.message)
       }
       );
-    } 
-   }
+      //console.warn(cpf);
+      //console.warn(cpf);
+     
+    }
+  }
 
   render(){
     return(

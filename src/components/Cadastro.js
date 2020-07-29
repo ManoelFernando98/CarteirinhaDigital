@@ -36,7 +36,6 @@ export default class App extends React.Component{
   
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
           placeholder="RA"
           keyboardType="numeric"
           autoCorrect={false}
@@ -46,7 +45,6 @@ export default class App extends React.Component{
   
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
           placeholder="CPF"
           keyboardType="numeric"
           autoCorrect={false}
@@ -56,7 +54,6 @@ export default class App extends React.Component{
                
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
           placeholder="Curso"
           autoCorrect={false}
           onChangeText = {() => {}}
@@ -64,7 +61,6 @@ export default class App extends React.Component{
 
         <TextInput
           style={styles.input}
-          secureTextEntry={true}
           placeholder="Data de Nascimento"
           keyboardType="numeric"
           autoCorrect={false}

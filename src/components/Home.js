@@ -12,8 +12,11 @@ export default class Home extends React.Component { 
   }
   
   render(){
-    
-	return (
+    const { params } = this.props.navigation.state;
+    const nome = params ? params.nome : null;
+    const ra = params ? params.ra : null;
+    const curso = params ? params.curso : null;
+	  return (
       
       <View style={styles.background}>  
           <View style={styles.containerFoto}>
@@ -25,16 +28,16 @@ export default class Home extends React.Component { 
 
           <View style={styles.containerNome}>
           <Text style={styles.textNome}>
-            Manoel Fernando Thomaz Lopes Conceição {'\n'}
-            R.A: 119804 {'\n'}
-            Eng. Química {'\n'}
+            Nome: {nome} {'\n'}
+            R.A: {ra} {'\n'}
+            Curso: {curso} {'\n'}
           </Text>
           </View>
 
         <View style={styles.containerQRCode}>
         <QRCode
           style={styles.QRCode}
-          value={'119804'}
+          value={ra.toString()}
           size={QRCodeSize}
           backgroundColor="white"
           color="black"
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textNome:{
-    fontSize: 25,
+    fontSize: 22,
     fontWeight: 'bold',
     color: '#FFFF',
     width:'900%',

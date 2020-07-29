@@ -33,40 +33,41 @@ export default class App extends Component{
     collection.RA = this.state.RA,
     collection.Senha = this.state.Senha
     //console.warn(collection);
-    var obj;
     var ra;
     var senha;
+    var dadosUsuario;
 
     if (collection.RA == null || collection.Senha == null ) {
-      Alert.alert("ATENÇÃO","Preencha CPF e Senha para continuar");
+      Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
       var url = "http://10.0.2.2:3030/usuarios/codigo/" + collection.RA;
       fetch(url)
       .then(res => res.json()) //45589876652
-      .then( data => (
-        obj = data,
+      .then(data => (
+        dadosUsuario = data,
         ra = data.usuario[0].codigo,
         senha = data.usuario[0].senha
         ))
       .then(() => {
         if(collection.RA == ra && collection.Senha == senha){
-          this.props.navigation.navigate('Home');
+          this.props.navigation.navigate('Home',  {
+            nome: dadosUsuario.usuario[0].nome,  
+            ra: dadosUsuario.usuario[0].codigo,  
+            curso: dadosUsuario.usuario[0].curso,  
+          });
         }else{
-          Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        Alert.alert("ATENÇÃO","Houve um problema com o seu login, verifique suas credenciais!");
+        console.warn('There has been a problem with your fetch operation:' + error.message)
       }
       );
       //console.warn(cpf);
       //console.warn(cpf);
      
     }
-
-
-    
-   }
+  }
 
   render(){
     return(

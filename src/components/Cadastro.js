@@ -1,17 +1,94 @@
 import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Switch } from 'react-native';
+import { State } from 'react-native-gesture-handler';
+import { TextInputMask } from 'react-native-masked-text'
 
 
-export default class App extends React.Component{
-  state = {switchValue:false}
-     toggleSwitch = (value) => {
-      this.setState({switchValue: value})
-   }
+export default class App extends React.Component {
+
+state = {switchValue:false}
+
+  toggleSwitch = (value) => {
+        this.setState({switchValue: value})
+  }
   
   clicou = () => {
+    //console.warn(state);
     Alert.alert("Atenção!","Preencha todos os campos.");
   }
 
+  constructor(props) {
+    super(props);
+    this.state = {
+        data: []
+    };
+  }
+
+  updateValue (text, field)  {
+    if(field == 'Nome'){
+      this.setState({
+        Nome: text,
+      })
+    } else if(field == 'RA'){
+      this.setState({
+        RA: text,
+      })
+    }else if(field == 'CPF'){
+      this.setState({
+        CPF: text,
+      })
+    }else if(field == 'Curso'){
+      this.setState({
+        Curso: text,
+      })
+    }else if(field == 'dtNascimento'){
+      this.setState({
+        dtNascimento: text,
+      })
+    }
+  }
+
+  submit(){
+    try{
+      let collection = {}
+      collection.Nome = this.state.Nome,
+      collection.RA = this.state.RA,
+      collection.CPF = this.state.CPF,
+      collection.Curso = this.state.Curso,
+      collection.dtNascimento = this.dtNascimento
+
+      fetch('http://10.0.2.2:3030/usuarios/', {
+        method: 'POST',
+        headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nome: collection.Nome,
+          codigo: collection.RA,
+          senha: '123',
+          curso: collection.Curso,
+          cpf: collection.CPF,
+          dtNascimento: '11022012',
+          btAdm: false
+        })
+      });
+    
+    }catch{
+      Alert.alert("Atenção","Houve um problema de conexão!");
+    }
+  }
+  /*fetch('https://mywebsite.com/endpoint/', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    firstParam: 'yourValue',
+    secondParam: 'yourOtherValue'
+  })
+});*/
   
 
   render(){
@@ -31,7 +108,7 @@ export default class App extends React.Component{
           style={styles.input}
           autoCorrect={false}
           placeholder="Nome"
-          onChangeText={() => {}}
+          onChangeText={(text) => this.updateValue(text,'Nome')}
         />
   
         <TextInput
@@ -40,7 +117,7 @@ export default class App extends React.Component{
           keyboardType="numeric"
           autoCorrect={false}
           maxLength = {6}
-          onChangeText = {() => {}}
+          onChangeText = {(text) => this.updateValue(text,'RA')}
         />
   
         <TextInput
@@ -48,24 +125,29 @@ export default class App extends React.Component{
           placeholder="CPF"
           keyboardType="numeric"
           autoCorrect={false}
-          maxLength = {11}
-          onChangeText = {() => {}}
+          maxLength = {14}
+          onChangeText = {(text) => { this.updateValue(text, 'CPF')}}
         />
                
         <TextInput
           style={styles.input}
           placeholder="Curso"
           autoCorrect={false}
-          onChangeText = {() => {}}
+          onChangeText = {(text) => this.updateValue(text,'Curso')}
         />
 
         <TextInput
+          /*type={'datetime'}
+          options={{
+            format: 'DD/MM/YYYY'
+          }}*/
           style={styles.input}
           placeholder="Data de Nascimento"
           keyboardType="numeric"
           autoCorrect={false}
-          maxLength = {8}
-          onChangeText = {() => {}}
+          maxLength = {10}
+          value={this.state.dtNascimento}
+          onChangeText = {(text) => { this.updateValue(text, 'dtNascimento')}}
         />
 
         <Text style={styles.textoMonitor}>Monitor</Text>
@@ -78,7 +160,7 @@ export default class App extends React.Component{
 
         <TouchableOpacity
           style={styles.botao}
-          onPress={() => {this.props.navigation.navigate('Home'), this.clicou()}}
+          onPress={() => {this.submit()}}
         >
           <Text style={styles.botaoText}>Cadastrar</Text>
         </TouchableOpacity>
@@ -156,10 +238,9 @@ const styles = StyleSheet.create({
     color: '#3D9CF5',
     fontWeight: 'bold',
     marginBottom: -10,
-    marginRight: 250,
+    marginRight: 250
   },
   switch:{
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 280,

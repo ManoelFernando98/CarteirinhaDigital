@@ -53,6 +53,7 @@ export default class LoginCPF extends React.Component{
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
+            btAdm: dadosUsuario.usuario[0].btAdm,
           });
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");

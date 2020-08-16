@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Alert, Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 import LoginCPF from './LoginCPF';
+import { param } from 'jquery';
 
 const QRCodeSize = Dimensions.get("window").width * 0.70;
 
@@ -14,8 +15,11 @@ export default class Home extends React.Component { 
   render(){
     const { params } = this.props.navigation.state;
     const nome = params ? params.nome : null;
+    const btAdm = params ? params.btAdm : null;
     const ra = params ? params.ra : null;
     const curso = params ? params.curso : null;
+    
+    //console.warn(btAdm);
 	  return (
       
       <View style={styles.background}>  
@@ -53,14 +57,19 @@ export default class Home extends React.Component { 
           </TouchableOpacity>
         </View>
 
+      { btAdm
+        ?
         <View style={[styles.containerCadastro]}>
           <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
             <Image
             style={[styles.cadastro]}
-            source ={require('../components/Cadastro.png')}
+            source = {require('../components/Cadastro.png')}
             />
           </TouchableOpacity>
-        </View> 
+        </View>
+        :
+        false
+      }
 
       </View>
   );
@@ -90,16 +99,18 @@ const styles = StyleSheet.create({
     //flex: 1,
     width: 50,
     height: 50,
-    marginBottom: 5,
+    marginTop: -10,
+    marginBottom: 8
   },
   sobre:{
     width: 50,
     height: 50
   },
   sobreContainer:{
-    marginTop: 3,
+    marginTop: 8,
     marginBottom: -7,
-    marginRight: -320
+    marginRight: -320,
+    marginBottom: 2
   },
   containerFoto:{
     flex: 1,
@@ -117,7 +128,7 @@ const styles = StyleSheet.create({
   },
   containerNome:{
     width: 24, 
-    height: 175,
+    height: 165,
     marginBottom: 10,
   },
   QRCode:{
@@ -130,6 +141,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#FFFF',
     width:'900%',
-    height:'150%'
+    height:'170%'
   }
 })

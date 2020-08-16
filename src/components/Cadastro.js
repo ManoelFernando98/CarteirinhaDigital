@@ -79,6 +79,7 @@ state = {switchValue:false}
           btAdm: collection.btMonitor
         })
       });
+      Alert.alert("Atenção!","O cadastro foi efetuado com sucesso.");
      }
     }catch{
       Alert.alert("Atenção","Houve um problema de conexão!");

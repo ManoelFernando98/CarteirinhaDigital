@@ -2,6 +2,7 @@ import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Switch } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text'
+import { Value } from 'react-native-reanimated';
 
 
 export default class App extends React.Component {
@@ -10,6 +11,7 @@ state = {switchValue:false}
 
   toggleSwitch = (value) => {
         this.setState({switchValue: value})
+        console.warn(value);
   }
   
   clicou = () => {
@@ -55,9 +57,13 @@ state = {switchValue:false}
       collection.RA = this.state.RA,
       collection.CPF = this.state.CPF,
       collection.Curso = this.state.Curso,
-      collection.dtNascimento = this.dtNascimento
+      collection.dtNascimento = this.state.dtNascimento
+      collection.btMonitor = this.state.switchValue
 
-      fetch('http://10.0.2.2:3030/usuarios/', {
+      if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null || collection.dtNascimento == null) {
+        Alert.alert("Atenção!","Preencha todos os campos.");
+      }else{
+        fetch('http://10.0.2.2:3030/usuarios/', {
         method: 'POST',
         headers: {
         Accept: 'application/json',
@@ -66,14 +72,14 @@ state = {switchValue:false}
         body: JSON.stringify({
           nome: collection.Nome,
           codigo: collection.RA,
-          senha: '123',
+          senha: collection.dtNascimento,
           curso: collection.Curso,
           cpf: collection.CPF,
-          dtNascimento: '11022012',
-          btAdm: false
+          dtNascimento: collection.dtNascimento,
+          btAdm: collection.btMonitor
         })
       });
-    
+     }
     }catch{
       Alert.alert("Atenção","Houve um problema de conexão!");
     }
@@ -146,16 +152,15 @@ state = {switchValue:false}
           keyboardType="numeric"
           autoCorrect={false}
           maxLength = {10}
-          value={this.state.dtNascimento}
-          onChangeText = {(text) => { this.updateValue(text, 'dtNascimento')}}
+          onChangeText = {(text) => this.updateValue(text, 'dtNascimento')}
         />
 
         <Text style={styles.textoMonitor}>Monitor</Text>
         
         <Switch
          style={styles.switch}
-         onValueChange = {this.toggleSwitch}
          value = {this.state.switchValue}
+         onValueChange = {(switchValue)=>this.setState({switchValue})}
         />
 
         <TouchableOpacity

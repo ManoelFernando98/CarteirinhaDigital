@@ -50,6 +50,10 @@ state = {switchValue:false}
     }
   }
 
+  unmask(){
+    const dtNascimentoUnmask = this.dtNascimento.getRawValue();
+  }
+
   submit(){
     try{
       let collection = {}
@@ -57,10 +61,10 @@ state = {switchValue:false}
       collection.RA = this.state.RA,
       collection.CPF = this.state.CPF,
       collection.Curso = this.state.Curso,
-      collection.dtNascimento = this.state.dtNascimento
+      collection.dtNascimento = this.state.dtNascimento,
       collection.btMonitor = this.state.switchValue
-
-      if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null || collection.dtNascimento == null) {
+      console.warn(this.state.dtNascimento)
+      if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
         Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
         fetch('http://10.0.2.2:3030/usuarios/', {
@@ -101,14 +105,7 @@ state = {switchValue:false}
   render(){
     return(
       <KeyboardAvoidingView style={styles.background}>
-        <View style={styles.containerLogo}>
-          <Image
-            style={[styles.logo]}
-            source ={require('../components/LogoCarteirinha.png')}
-          />
-        <Text style={styles.texto}> Carteirinha Digital </Text> 
-        </View>
-  
+        
         <View style={[styles.container]}>
 
         <TextInput
@@ -127,7 +124,9 @@ state = {switchValue:false}
           onChangeText = {(text) => this.updateValue(text,'RA')}
         />
   
-        <TextInput
+        <TextInputMask
+          type={'cpf'}
+          value={this.state.CPF}
           style={styles.input}
           placeholder="CPF"
           keyboardType="numeric"
@@ -143,11 +142,13 @@ state = {switchValue:false}
           onChangeText = {(text) => this.updateValue(text,'Curso')}
         />
 
-        <TextInput
-          /*type={'datetime'}
+        <TextInputMask
+          type={'datetime'}
           options={{
             format: 'DD/MM/YYYY'
-          }}*/
+          }}
+          
+          value={this.state.dtNascimento}
           style={styles.input}
           placeholder="Data de Nascimento"
           keyboardType="numeric"
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width:'90%',
     paddingBottom: 50,
-    marginTop: -60
+    marginTop: 80
   },
   texto:{
     fontSize: 28,
@@ -243,14 +244,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#3D9CF5',
     fontWeight: 'bold',
-    marginBottom: -10,
+    marginBottom: -30,
     marginRight: 250
   },
   switch:{
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 280,
-    marginBottom:30
+    marginBottom:20
   }
 
 });

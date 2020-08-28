@@ -1,6 +1,6 @@
 import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-
+import { TextInputMask } from 'react-native-masked-text'
 
 export default class LoginCPF extends React.Component{
 
@@ -82,13 +82,15 @@ export default class LoginCPF extends React.Component{
   
         <View style={[ styles.container]}>
 
-        <TextInput
+        <TextInputMask
+          type={'cpf'}
+          value={this.state.CPF}
           style={styles.input}
           keyboardType="numeric"
           autoCorrect={false}
           placeholder="CPF"
           onChangeText={(text) => this.updateValue(text,'CPF')}
-          maxLength={11}
+          maxLength={14}
         />
   
         <TextInput
@@ -98,7 +100,7 @@ export default class LoginCPF extends React.Component{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText={(text) => this.updateValue(text,'Senha')}
-          maxLength={6}
+          maxLength={8}
         />
   
         <TouchableOpacity

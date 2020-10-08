@@ -40,7 +40,7 @@ export default class App extends Component{
     if (collection.RA == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://10.0.2.2:3030/usuarios/codigo/" + collection.RA;
+      var url = "http://localhost:3030/usuarios/codigo/" + collection.RA; //10.0.2.2
       fetch(url)
       .then(res => res.json()) //45589876652
       .then(data => (
@@ -54,18 +54,17 @@ export default class App extends Component{
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
-            btAdm: dadosUsuario.usuario[0].btAdm, 
+            btAdm: dadosUsuario.usuario[0].btAdm
           });
-          console.warn(btAdm);
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        //console.warn('There has been a problem with your fetch operation:' + error.message)
+        console.warn('There has been a problem with your fetch operation:' + error.message)
       }
       );
-      
+      //console.warn(cpf);
       //console.warn(cpf);
      
     }
@@ -100,7 +99,7 @@ export default class App extends Component{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText = {(text) => this.updateValue(text, 'Senha')}
-          maxLength={8}
+          maxLength={6}
         />
   
         <TouchableOpacity

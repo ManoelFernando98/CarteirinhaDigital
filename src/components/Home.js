@@ -24,6 +24,9 @@ export default class Home extends React.Component { 
   }
   
   adicionarFoto = () => {
+    const { params } = this.props.navigation.state
+    const ra = params ? params.ra : null;
+    
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
@@ -33,20 +36,40 @@ export default class Home extends React.Component { 
       else if (response.error) {
         console.log('Image Picker Error: ', response.error);
       }
-
       else {
-        let source = { uri: response.uri };
+        let codigo = this.ra;
+        let source = { uri :  response.uri };
+        const fileURL = source.uri.split("/");
+        const photoName = source.uri; 
 
+        //console.warn(this.state.avatarSource);
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-
+        
         this.setState({
-          avatarSource: source,
+          avatarSource: source.uri,
           pic:response.data
         });
+
+
+        console.warn(photoName);
+        
+        
+         fetch('http://localhost:3030/usuarios/codigo/' + ra , {
+          method: 'POST',
+          
+          body: JSON.stringify({
+              foto: photoName
+            })
+          })
+
+        Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso.");
+
+       
       }
     });
   }
+
   render(){
     const { params } = this.props.navigation.state;
     const nome = params ? params.nome : null;
@@ -110,19 +133,22 @@ export default class Home extends React.Component { 
             </TouchableOpacity>
           </View>
 
-        { btAdm
-          ?
-          <View style={[styles.containerCadastro]}>
+          {
+            btAdm
+            ?
+            <View style={[styles.containerCadastro]}>
             <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
               <Image
               style={[styles.cadastro]}
               source = {require('../components/Cadastro.png')}
               />
             </TouchableOpacity>
-          </View>
-          :
-          false
-        }
+            </View>
+            :
+            false
+          }
+          
+        
 
       </View>
   );
@@ -140,7 +166,7 @@ const styles = StyleSheet.create({
   foto:{
     width: 160,
     height: 170,
-    marginTop: 10,
+    marginTop: 80,
     borderRadius: 30
   },
   containerCadastro:{
@@ -185,12 +211,13 @@ const styles = StyleSheet.create({
     width:'90%',
     backgroundColor: '#FFFF',
     borderRadius: 20,
-    height: 350
+    height: 410,
+    marginBottom: 50
   },
   containerNome:{
     width: 24, 
     height: 165,
-    marginBottom: -30,
+    marginBottom: -18,
   },
   QRCode:{
     flex:1,

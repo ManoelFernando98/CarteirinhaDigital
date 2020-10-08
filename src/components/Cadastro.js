@@ -2,7 +2,7 @@ import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity, Switch } from 'react-native';
 import { State } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text'
-import { Value } from 'react-native-reanimated';
+
 
 
 export default class App extends React.Component {
@@ -50,10 +50,6 @@ state = {switchValue:false}
     }
   }
 
-  unmask(){
-    const dtNascimentoUnmask = this.dtNascimento.getRawValue();
-  }
-
   submit(){
     try{
       let collection = {}
@@ -67,7 +63,7 @@ state = {switchValue:false}
       if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
         Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
-        fetch('http://10.0.2.2:3030/usuarios/', {
+        fetch('http://localhost:3030/usuarios/', {
         method: 'POST',
         headers: {
         Accept: 'application/json',

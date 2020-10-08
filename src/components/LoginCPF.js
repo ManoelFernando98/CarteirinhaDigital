@@ -1,6 +1,6 @@
 import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-import { TextInputMask } from 'react-native-masked-text'
+
 
 export default class LoginCPF extends React.Component{
 
@@ -53,7 +53,6 @@ export default class LoginCPF extends React.Component{
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
-            btAdm: dadosUsuario.usuario[0].btAdm,
           });
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
@@ -82,15 +81,13 @@ export default class LoginCPF extends React.Component{
   
         <View style={[ styles.container]}>
 
-        <TextInputMask
-          type={'cpf'}
-          value={this.state.CPF}
+        <TextInput
           style={styles.input}
           keyboardType="numeric"
           autoCorrect={false}
           placeholder="CPF"
           onChangeText={(text) => this.updateValue(text,'CPF')}
-          maxLength={14}
+          maxLength={11}
         />
   
         <TextInput
@@ -100,7 +97,7 @@ export default class LoginCPF extends React.Component{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText={(text) => this.updateValue(text,'Senha')}
-          maxLength={8}
+          maxLength={6}
         />
   
         <TouchableOpacity

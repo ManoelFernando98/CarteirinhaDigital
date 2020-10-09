@@ -22,11 +22,16 @@ export default class Home extends React.Component { 
   clicou = () => {
     Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
   }
+
+  
   
   adicionarFoto = () => {
     const { params } = this.props.navigation.state
     const ra = params ? params.ra : null;
+    const url = params ? params.url : null;
+    //console.warn(url);
     
+
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
 
@@ -37,35 +42,61 @@ export default class Home extends React.Component { 
         console.log('Image Picker Error: ', response.error);
       }
       else {
+        console.warn(url);
         let codigo = this.ra;
         let source = { uri :  response.uri };
-        const fileURL = source.uri.split("/");
         const photoName = source.uri; 
+        const urlA = url; 
+
+        
 
         //console.warn(this.state.avatarSource);
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
         
         this.setState({
-          avatarSource: source.uri,
+          avatarSource: urlA,
           pic:response.data
         });
 
-
-        console.warn(photoName);
         
+
         
-         fetch('http://localhost:3030/usuarios/codigo/' + ra , {
-          method: 'POST',
-          
-          body: JSON.stringify({
-              foto: photoName
-            })
-          })
-
-        Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso.");
-
+        fetch('http://localhost:3030/usuarios/' + ra , {
+        method: 'PATCH',
+        headers:  {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          [
+            {
+              propName: "url",
+              value: photoName
+            }
+          ]
+        )
+        })
+        
+        /*
+        var urlAPI;
+        var dadosUsuario;
+        fetch('http://localhost:3030/usuarios/codigo/' + ra)
+        .then(res => res.json())
+        .then(data => (
+          dadosUsuario = data,
+          urlAPI = data.usuario[0].url
+        ))
+        .then(() => {
+          urlAPI = dadosUsuario.usuario[0].url
+        })
+        
+        */
        
+        
+
+        Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso. Saia do aplicativo e entre novamente para atualizar a foto!");
+        
       }
     });
   }
@@ -76,16 +107,19 @@ export default class Home extends React.Component { 
     const btAdm = params ? params.btAdm : null;
     const ra = params ? params.ra : null;
     const curso = params ? params.curso : null;
-
+    const url = params ? params.url : null;
+    
+    //console.warn(url);
 	  return (
         <View style={styles.background}>  
-        
-        { this.state.avatarSource
+
+        { url
+          
           ?
           <View style={styles.containerFoto}>
           <Image
             style={[styles.foto]}
-            source ={this.state.avatarSource}
+            source ={{uri: url}}
           />
           </View>
           :

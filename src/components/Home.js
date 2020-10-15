@@ -1,8 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Alert, Image, Text, StyleSheet, View, Dimensions, TouchableOpacity} from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 import LoginCPF from './LoginCPF';
 import ImagePicker from 'react-native-image-picker';
+import TouchID from 'react-native-touch-id';
+import { error } from 'jquery';
 
 const QRCodeSize = Dimensions.get("window").width * 0.70;
 const options = {
@@ -15,15 +17,61 @@ export default class Home extends React.Component { 
     super(props);
     this.state={
       avatarSource: null,
-      pic: null
+      pic: null,
+      supported: null,
+      setSupported: null,
     }
   }
 
-  clicou = () => {
-    Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
-  }
+  /*clicou = () => {
+    //Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
+  }*/
 
-  
+  handleLogin = () => {
+    const { params } = this.props.navigation.state
+    const ra = params ? params.ra : null;
+    const idDigital = true;
+
+   /* TouchID.isSupported()
+    .then(sucesso => {
+      setSupported(true);
+    })
+    .catch((error)=>{
+      console.log("Erro Touch" + error);
+    })*/
+    
+    const configs = {
+      title: 'Validando aluno',
+      color: '#FF0000',
+      sensorErrorDescription: 'Touch ID inválido',
+    }
+    TouchID.authenticate("", configs)
+    .then(sucesso =>{
+      console.log('Sucesso :D')
+      // envio do resultado p API aqui
+      //const idDigital = true;
+      console.warn(idDigital);
+      /*fetch('http://localhost:3030/usuarios/' + ra , {
+        method: 'PATCH',
+        headers:  {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(
+          [
+            {
+              propName: "url",
+              value: photoName
+            }
+          ]
+        )
+        })*/
+
+    })
+    .catch(erro =>{
+      console.log('Falha na validacao');
+    })
+  }
   
   adicionarFoto = () => {
     const { params } = this.props.navigation.state
@@ -49,7 +97,6 @@ export default class Home extends React.Component { 
         const urlA = url; 
 
         
-
         //console.warn(this.state.avatarSource);
         // You can also display the image using data:
         // let source = { uri: 'data:image/jpeg;base64,' + response.data };
@@ -58,8 +105,6 @@ export default class Home extends React.Component { 
           avatarSource: urlA,
           pic:response.data
         });
-
-        
 
         
         fetch('http://localhost:3030/usuarios/' + ra , {
@@ -93,8 +138,6 @@ export default class Home extends React.Component { 
         
         */
        
-        
-
         Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso. Saia do aplicativo e entre novamente para atualizar a foto!");
         
       }
@@ -159,7 +202,7 @@ export default class Home extends React.Component { 
           </View>
 
           <View style={[styles.sobreContainer]}>
-            <TouchableOpacity onPress={() => {this.clicou()}}>
+            <TouchableOpacity onPress={() => {this.handleLogin()}}>
               <Image
               style={[styles.sobre]}
               source ={require('../components/sobre.png')}

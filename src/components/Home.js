@@ -39,9 +39,9 @@ export default class Home extends React.Component { 
     .catch((error)=>{
       console.log("Erro Touch" + error);
     })*/
-    
     const configs = {
       title: 'Validando aluno',
+      sensorDescription: 'Utilize a digital para retirar seu kit',
       color: '#FF0000',
       sensorErrorDescription: 'Touch ID inválido',
     }
@@ -50,7 +50,8 @@ export default class Home extends React.Component { 
       console.log('Sucesso :D')
       // envio do resultado p API aqui
       //const idDigital = true;
-      console.warn(idDigital);
+      //console.warn(idDigital);
+      Alert.alert("Atenção", "Digital reconhecida. Verifique seu kit com o monitor.");
       /*fetch('http://localhost:3030/usuarios/' + ra , {
         method: 'PATCH',
         headers:  {
@@ -71,6 +72,8 @@ export default class Home extends React.Component { 
     .catch(erro =>{
       console.log('Falha na validacao');
     })
+
+   
   }
   
   adicionarFoto = () => {
@@ -205,7 +208,7 @@ export default class Home extends React.Component { 
             <TouchableOpacity onPress={() => {this.handleLogin()}}>
               <Image
               style={[styles.sobre]}
-              source ={require('../components/sobre.png')}
+              source ={require('../components/digital.png')}
               />
             </TouchableOpacity>
           </View>
@@ -268,7 +271,7 @@ const styles = StyleSheet.create({
   },
   sobre:{
     width: 50,
-    height: 50
+    height: 55
   },
   sobreContainer:{
     marginTop: 8,

@@ -41,33 +41,49 @@ export default class App extends Component{
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
       var url = "http://localhost:3030/usuarios/codigo/" + collection.RA; //10.0.2.2
+      var urlDigital = "http://localhost:3030/usuarios/btkit/" + collection.RA;
+
+      fetch(urlDigital)
+      .then(res => res.json())
+      .then(data => (
+        dadosKit = data,
+        btKit = data.btKit
+      ))
+      .then(() => {
+        this.props.navigation.navigate('Home',  {
+          btKit: dadosKit.btKit  
+        }); 
+      })
+
+      //console.warn(btKit);
+
       fetch(url)
       .then(res => res.json()) //45589876652
       .then(data => (
         dadosUsuario = data,
         ra = data.usuario[0].codigo,
         senha = data.usuario[0].senha
-        ))
-        .then(() => {
-          if(collection.RA == ra && collection.Senha == senha){
-            this.props.navigation.navigate('Home',  {
-              nome: dadosUsuario.usuario[0].nome,  
-              ra: dadosUsuario.usuario[0].codigo,  
-              curso: dadosUsuario.usuario[0].curso,  
-              btAdm: dadosUsuario.usuario[0].btAdm, 
-              url: dadosUsuario.usuario[0].url   
-            });
-          }else{
-            Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
-          }
-        })
-        .catch(function(error){
-          console.warn('There has been a problem with your fetch operation:' + error.message)
+      ))
+      .then(() => {
+        if(collection.RA == ra && collection.Senha == senha){
+          this.props.navigation.navigate('Home',  {
+            nome: dadosUsuario.usuario[0].nome,  
+            ra: dadosUsuario.usuario[0].codigo,  
+            curso: dadosUsuario.usuario[0].curso,  
+            btAdm: dadosUsuario.usuario[0].btAdm, 
+            url: dadosUsuario.usuario[0].url   
+          });
+        }else{
+             Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
-        );
+      })
+      .catch(function(error){
+        console.warn('There has been a problem with your fetch operation:' + error.message)
+        }
+      );
       //console.warn(cpf);
       //console.warn(cpf);
-     
+
     }
   }
 

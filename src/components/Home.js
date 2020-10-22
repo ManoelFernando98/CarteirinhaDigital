@@ -4,7 +4,6 @@ import QRCode from 'react-native-qrcode-svg';
 import LoginCPF from './LoginCPF';
 import ImagePicker from 'react-native-image-picker';
 import TouchID from 'react-native-touch-id';
-import { error } from 'jquery';
 
 const QRCodeSize = Dimensions.get("window").width * 0.70;
 const options = {
@@ -52,7 +51,7 @@ export default class Home extends React.Component { 
       //const idDigital = true;
       //console.warn(idDigital);
       Alert.alert("Atenção", "Digital reconhecida. Verifique seu kit com o monitor.");
-      /*fetch('http://localhost:3030/usuarios/' + ra , {
+      fetch('http://localhost:3030/usuarios/' + ra , {
         method: 'PATCH',
         headers:  {
           Accept: 'application/json',
@@ -61,12 +60,12 @@ export default class Home extends React.Component { 
         body: JSON.stringify(
           [
             {
-              propName: "url",
-              value: photoName
+              "propName" : "btDigital",
+              "value" :true
             }
           ]
-        )
-        })*/
+          )
+        })
 
     })
     .catch(erro =>{
@@ -80,7 +79,7 @@ export default class Home extends React.Component { 
     const { params } = this.props.navigation.state
     const ra = params ? params.ra : null;
     const url = params ? params.url : null;
-    //console.warn(url);
+    
     
 
     ImagePicker.showImagePicker(options, (response) => {
@@ -154,13 +153,15 @@ export default class Home extends React.Component { 
     const ra = params ? params.ra : null;
     const curso = params ? params.curso : null;
     const url = params ? params.url : null;
-    
+    const btKit = params ? params.btKit : null;
+
+    //const raString = ra ? ra.toString() : "";
+
     //console.warn(url);
 	  return (
         <View style={styles.background}>  
 
         { url
-          
           ?
           <View style={styles.containerFoto}>
           <Image
@@ -197,27 +198,38 @@ export default class Home extends React.Component { 
           <View style={styles.containerQRCode}>
           <QRCode
             style={styles.QRCode}
-            value={ra.toString()}
+            value= {ra ? ra.toString() : "Indefined"}
             size={QRCodeSize}
             backgroundColor="white"
             color="black"
           />
           </View>
 
-          <View style={[styles.sobreContainer]}>
-            <TouchableOpacity onPress={() => {this.handleLogin()}}>
+          {
+            btKit
+            ?
+            <View style={[styles.sobreContainer]}>
+              <TouchableOpacity onPress={() => {this.handleLogin()}}>
               <Image
-              style={[styles.sobre]}
-              source ={require('../components/digital.png')}
+                style={[styles.sobre]}
+                source ={require('../components/digital.png')}
               />
-            </TouchableOpacity>
-          </View>
+              </TouchableOpacity>
+            </View>
+            :
+            <View style={[styles.sobreContainer]}>
+              <View style={[styles.sobre]}>
+              
+              </View>
+            </View>
+          }
+          
 
           {
             btAdm
             ?
             <View style={[styles.containerCadastro]}>
-            <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
+              <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
               <Image
               style={[styles.cadastro]}
               source = {require('../components/Cadastro.png')}
@@ -225,7 +237,10 @@ export default class Home extends React.Component { 
             </TouchableOpacity>
             </View>
             :
-            false
+            <View style={[styles.containerCadastro]}>
+              <View style={[styles.cadastro]}>
+              </View>  
+            </View>
           }
           
         

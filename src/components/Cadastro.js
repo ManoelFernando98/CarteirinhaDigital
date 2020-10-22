@@ -99,6 +99,7 @@ state = {switchValue:false}
   
 
   render(){
+  
     return(
       <KeyboardAvoidingView style={styles.background}>
         
@@ -196,11 +197,11 @@ const styles = StyleSheet.create({
     marginTop: 80
   },
   texto:{
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#3D9CF5',
     alignItems: 'center',
-    marginTop: -10,
+    marginTop: 10,
   },
   logo:{
     width: 150,
@@ -212,7 +213,7 @@ const styles = StyleSheet.create({
     borderColor: 'navy',
     width: '90%',
     marginBottom: 15,
-    fontSize: 17,
+    fontSize: 14,
     borderRadius: 10,
     padding: 10,
     marginTop: -8,

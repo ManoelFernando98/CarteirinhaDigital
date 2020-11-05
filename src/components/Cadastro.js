@@ -52,6 +52,7 @@ state = {switchValue:false}
 
   submit(){
     try{
+      //const unmasked = this.unmaskDtNascimento.getRawValue();
       let collection = {}
       collection.Nome = this.state.Nome,
       collection.RA = this.state.RA,
@@ -59,11 +60,11 @@ state = {switchValue:false}
       collection.Curso = this.state.Curso,
       collection.dtNascimento = this.state.dtNascimento,
       collection.btMonitor = this.state.switchValue
-      console.warn(this.state.dtNascimento)
+      
       if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
         Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
-        fetch('http://localhost:3030/usuarios/', {
+       fetch('http://localhost:3030/usuarios/', {
         method: 'POST',
         headers: {
         Accept: 'application/json',
@@ -85,17 +86,6 @@ state = {switchValue:false}
       Alert.alert("Atenção","Houve um problema de conexão!");
     }
   }
-  /*fetch('https://mywebsite.com/endpoint/', {
-  method: 'POST',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    firstParam: 'yourValue',
-    secondParam: 'yourOtherValue'
-  })
-});*/
   
 
   render(){
@@ -139,20 +129,17 @@ state = {switchValue:false}
           onChangeText = {(text) => this.updateValue(text,'Curso')}
         />
 
-        <TextInputMask
-          type={'datetime'}
-          options={{
-            format: 'DD/MM/YYYY'
-          }}
-          
+        <TextInput
           value={this.state.dtNascimento}
           style={styles.input}
           placeholder="Data de Nascimento"
           keyboardType="numeric"
           autoCorrect={false}
-          maxLength = {10}
+          maxLength = {8}
           onChangeText = {(text) => this.updateValue(text, 'dtNascimento')}
         />
+
+        
 
         <Text style={styles.textoMonitor}>Monitor</Text>
         

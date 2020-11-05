@@ -116,7 +116,7 @@ export default class App extends Component{
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText = {(text) => this.updateValue(text, 'Senha')}
-          maxLength={6}
+          maxLength={8}
         />
   
         <TouchableOpacity

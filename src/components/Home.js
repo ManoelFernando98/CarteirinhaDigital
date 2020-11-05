@@ -92,7 +92,7 @@ export default class Home extends React.Component { 
         console.log('Image Picker Error: ', response.error);
       }
       else {
-        console.warn(url);
+        //console.warn(url);
         let codigo = this.ra;
         let source = { uri :  response.uri };
         const photoName = source.uri; 

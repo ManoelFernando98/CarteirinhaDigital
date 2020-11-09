@@ -1,5 +1,8 @@
+import { toDataURL } from 'qrcode';
 import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import NativeDialogManagerAndroid from 'react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid';
 
 
 export default class App extends Component{
@@ -72,7 +75,7 @@ export default class App extends Component{
             curso: dadosUsuario.usuario[0].curso,  
             btAdm: dadosUsuario.usuario[0].btAdm, 
             url: dadosUsuario.usuario[0].url   
-          });
+          }); 
         }else{
              Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
@@ -93,9 +96,9 @@ export default class App extends Component{
         <View style={styles.containerLogo}>
           <Image
             style={[ styles.logo]}
-            source ={require('../components/LogoCarteirinha.png')}
+            source ={require('../components/e_digital.png')}
           />
-        <Text style={styles.texto}> Carteirinha Digital </Text> 
+        
         </View>
   
         <View style={[ styles.container]}>
@@ -166,8 +169,8 @@ const styles = StyleSheet.create({
     marginTop: -25
   },
   logo:{
-    width: 250,
-    height: 190,
+    width: 400,
+    height: 250,
     marginTop: 80,
     borderRadius: 10
   },
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
   botao: {
     width:'90%',
     height: 42,
-    backgroundColor: '#3D9CF5',
+    backgroundColor: '#558E9E',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -199,9 +202,9 @@ const styles = StyleSheet.create({
     color:'#fff'
   },
   textRA:{
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#3D9CF5',
+    color: '#558E9E',
     marginTop: 5
   }
 });

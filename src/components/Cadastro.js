@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   botao:{
     width:'90%',
     height: 38,
-    backgroundColor: '#3D9CF5',
+    backgroundColor: '#558E9E',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
   },
   textoMonitor:{
     fontSize: 20,
-    color: '#3D9CF5',
+    color: '#558E9E',
     fontWeight: 'bold',
     marginBottom: -30,
     marginRight: 250

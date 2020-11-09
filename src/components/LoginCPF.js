@@ -1,6 +1,6 @@
 import React, {Component, useState, } from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-
+import { TextInputMask } from 'react-native-masked-text'
 
 export default class LoginCPF extends React.Component{
 
@@ -39,7 +39,7 @@ export default class LoginCPF extends React.Component{
     if (collection.CPF == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://10.0.2.2:3030/usuarios/cpf/" + collection.CPF;
+      var url = "http://localhost:3030/usuarios/cpf/" + collection.CPF;
       fetch(url)
       .then(res => res.json()) //45589876652
       .then(data => (
@@ -53,6 +53,8 @@ export default class LoginCPF extends React.Component{
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
+            btAdm: dadosUsuario.usuario[0].btAdm, 
+            url: dadosUsuario.usuario[0].url   
           });
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
@@ -74,20 +76,21 @@ export default class LoginCPF extends React.Component{
         <View style={styles.containerLogo}>
           <Image
             style={[ styles.logo]}
-            source ={require('../components/LogoCarteirinha.png')}
+            source ={require('../components/e_digital.png')}
           />
-        <Text style={styles.texto}> Carteirinha Digital </Text> 
         </View>
   
         <View style={[ styles.container]}>
 
-        <TextInput
+        <TextInputMask
+          type={'cpf'}
+          value={this.state.CPF}
           style={styles.input}
           keyboardType="numeric"
           autoCorrect={false}
           placeholder="CPF"
           onChangeText={(text) => this.updateValue(text,'CPF')}
-          maxLength={11}
+          maxLength={14}
         />
   
         <TextInput
@@ -147,8 +150,8 @@ const styles = StyleSheet.create({
     marginTop: -25
   },
   logo:{
-    width: 250,
-    height: 190,
+    width: 400,
+    height: 250,
     marginTop: 80,
     borderRadius: 10
   },
@@ -168,7 +171,7 @@ const styles = StyleSheet.create({
   botao: {
     width:'90%',
     height: 42,
-    backgroundColor: '#3D9CF5',
+    backgroundColor: '#558E9E',
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -180,9 +183,9 @@ const styles = StyleSheet.create({
     color:'#fff'
   },
   textRA:{
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#3D9CF5',
+    color: '#558E9E',
     marginTop: 5
   }
 });

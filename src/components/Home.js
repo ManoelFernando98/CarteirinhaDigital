@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#38C7E1'
+    backgroundColor: '#558E9E'
   },
   foto:{
     width: 160,

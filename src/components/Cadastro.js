@@ -64,7 +64,7 @@ state = {switchValue:false}
       if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
         Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
-       fetch('http://localhost:3030/usuarios/', {
+       fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
         method: 'POST',
         headers: {
         Accept: 'application/json',

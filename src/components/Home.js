@@ -29,8 +29,9 @@ export default class Home extends React.Component { 
   handleLogin = () => {
     const { params } = this.props.navigation.state
     const ra = params ? params.ra : null;
+    const id = params ? params.id : null;
     const idDigital = true;
-
+    
    /* TouchID.isSupported()
     .then(sucesso => {
       setSupported(true);
@@ -51,7 +52,7 @@ export default class Home extends React.Component { 
       //const idDigital = true;
       //console.warn(idDigital);
       Alert.alert("Atenção", "Digital reconhecida. Verifique seu kit com o monitor.");
-      fetch('http://localhost:3030/usuarios/' + ra , {
+      fetch('https://kcontrol-api.herokuapp.com/usuarios/' + id , {
         method: 'PATCH',
         headers:  {
           Accept: 'application/json',
@@ -79,6 +80,7 @@ export default class Home extends React.Component { 
     const { params } = this.props.navigation.state
     const ra = params ? params.ra : null;
     const url = params ? params.url : null;
+    const id = params ? params.id : null;
     
     
 
@@ -92,12 +94,12 @@ export default class Home extends React.Component { 
         console.log('Image Picker Error: ', response.error);
       }
       else {
-        //console.warn(url);
+        
         let codigo = this.ra;
         let source = { uri :  response.uri };
         const photoName = source.uri; 
         const urlA = url; 
-
+        //console.warn(photoName);
         
         //console.warn(this.state.avatarSource);
         // You can also display the image using data:
@@ -109,7 +111,7 @@ export default class Home extends React.Component { 
         });
 
         
-        fetch('http://localhost:3030/usuarios/' + ra , {
+        fetch('https://kcontrol-api.herokuapp.com/usuarios/' + id , {
         method: 'PATCH',
         headers:  {
           Accept: 'application/json',

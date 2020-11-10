@@ -43,8 +43,8 @@ export default class App extends Component{
     if (collection.RA == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://localhost:3030/usuarios/codigo/" + collection.RA; //10.0.2.2
-      var urlDigital = "http://localhost:3030/usuarios/btkit/" + collection.RA;
+      var url = "https://kcontrol-api.herokuapp.com/usuarios/codigo/" + collection.RA; //10.0.2.2
+      var urlDigital = "https://kcontrol-api.herokuapp.com/usuarios/btkit/" + collection.RA;
 
       fetch(urlDigital)
       .then(res => res.json())
@@ -70,6 +70,7 @@ export default class App extends Component{
       .then(() => {
         if(collection.RA == ra && collection.Senha == senha){
           this.props.navigation.navigate('Home',  {
+            id: dadosUsuario.usuario[0]._id,
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  

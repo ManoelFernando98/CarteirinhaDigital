@@ -39,7 +39,7 @@ export default class LoginCPF extends React.Component{
     if (collection.CPF == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
-      var url = "http://localhost:3030/usuarios/cpf/" + collection.CPF;
+      var url = "https://kcontrol-api.herokuapp.com/usuarios/cpf/" + collection.CPF;
       fetch(url)
       .then(res => res.json()) //45589876652
       .then(data => (

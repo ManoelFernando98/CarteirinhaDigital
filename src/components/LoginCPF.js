@@ -50,18 +50,21 @@ export default class LoginCPF extends React.Component{
       .then(() => {
         if(collection.CPF == cpf && collection.Senha == senha){
           this.props.navigation.navigate('Home',  {
+            id: dadosUsuario.usuario[0]._id,
             nome: dadosUsuario.usuario[0].nome,  
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
             btAdm: dadosUsuario.usuario[0].btAdm, 
-            url: dadosUsuario.usuario[0].url   
+            url: dadosUsuario.usuario[0].url,
+            btKit:dadosUsuario.usuario[0].btKit  
           });
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        console.warn('There has been a problem with your fetch operation:' + error.message)
+        Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+        //console.warn('There has been a problem with your fetch operation:' + error.message)
       }
       );
       //console.warn(cpf);

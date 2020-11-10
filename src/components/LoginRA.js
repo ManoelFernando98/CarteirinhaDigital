@@ -41,23 +41,10 @@ export default class App extends Component{
     var dadosUsuario;
 
     if (collection.RA == null || collection.Senha == null ) {
-      Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
+      Alert.alert("Atenção!","Preencha RA e Senha para continuar");
     } else{
       var url = "https://kcontrol-api.herokuapp.com/usuarios/codigo/" + collection.RA; //10.0.2.2
-      var urlDigital = "https://kcontrol-api.herokuapp.com/usuarios/btkit/" + collection.RA;
-
-      fetch(urlDigital)
-      .then(res => res.json())
-      .then(data => (
-        dadosKit = data,
-        btKit = data.btKit
-      ))
-      .then(() => {
-        this.props.navigation.navigate('Home',  {
-          btKit: dadosKit.btKit  
-        }); 
-      })
-
+      
       //console.warn(btKit);
 
       fetch(url)
@@ -68,6 +55,7 @@ export default class App extends Component{
         senha = data.usuario[0].senha
       ))
       .then(() => {
+        //console.warn(collection.RA);
         if(collection.RA == ra && collection.Senha == senha){
           this.props.navigation.navigate('Home',  {
             id: dadosUsuario.usuario[0]._id,
@@ -75,17 +63,30 @@ export default class App extends Component{
             ra: dadosUsuario.usuario[0].codigo,  
             curso: dadosUsuario.usuario[0].curso,  
             btAdm: dadosUsuario.usuario[0].btAdm, 
-            url: dadosUsuario.usuario[0].url   
-          }); 
+            url: dadosUsuario.usuario[0].url,   
+            btKit:dadosUsuario.usuario[0].btKit
+        }); 
         }else{
-             Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+          Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       })
       .catch(function(error){
-        console.warn('There has been a problem with your fetch operation:' + error.message)
+        //console.warn('There has been a problem with your fetch operation:' + error.message)
+        Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
       );
-      //console.warn(cpf);
+      
+      /*fetch(urlDigital)
+      .then(res => res.json())
+      .then(data => (
+        dadosKit = data,
+        btKit = data.btKit
+      ))
+      .then(() => {
+        this.props.navigation.navigate('Home',  {
+          btKit: dadosKit.btKit  
+        }); 
+      })*/
       //console.warn(cpf);
 
     }

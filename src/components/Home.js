@@ -273,20 +273,20 @@ const styles = StyleSheet.create({
   },
   foto:{
     width: '30%',
-    height: '67%',
-    marginTop: '30%',
+    height: '57%',
+    marginTop: '32%',
     borderRadius: 30
   },
   cadastro:{
     //flex: 1,
-    width: '26%',
+    width: '28%',
     height: '57%'
   },
   containerCadastro:{
     flex: 1,
     width: '37%',
     marginRight: '30%',
-    marginBottom: '2%'
+    marginBottom: '-1%'
   },
   sobre:{
     width: '34%',
@@ -296,13 +296,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: '81%',
     width: '30%',
-    marginBottom: '-29%'
+    marginBottom: '-31%'
   },
   containerBotaoMais:{
     //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
-    height: '8%',
-    marginRight: '33%',
-    marginTop: '-17%'
+    height: '10%',
+    marginRight: '35%',
+    marginTop: '-32%'
   },
   botaoMais:{
     width: 45,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   containerNome:{
     flexWrap: 'wrap',
     width: '14%', 
-    height: '20%',
+    height: '26%',
     marginRight: '10%',
   },
   QRCode:{

@@ -314,7 +314,7 @@ const styles = StyleSheet.create({
   containerNome:{
     width: 24, 
     height: 165,
-    marginBottom: -18,
+    marginBottom: -18
   },
   QRCode:{
     flex:1,

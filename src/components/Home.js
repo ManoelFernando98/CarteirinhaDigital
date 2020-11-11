@@ -165,36 +165,31 @@ export default class Home extends React.Component { 
 
         { url
           ?
-          <View style={styles.containerFoto}>
+          <View style={styles.containerFoto} >
+          <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
             source ={{uri: url}}
           />
+          </TouchableOpacity>
           </View>
           :
           <View style={styles.containerFoto}>
+          <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
             source ={require('../components/logoPersonagem.png')}
           />
+          </TouchableOpacity>
           </View>
         }
 
           <View style={styles.containerNome}>
             <Text style={styles.textNome}>
-              Nome: {nome} {'\n'}
-              R.A: {ra} {'\n'}
-              Curso: {curso} {'\n'}
+              {nome} {'\n'}
+              {ra} {'\n'}
+              {curso} {'\n'}
             </Text>
-          </View>
-
-          <View style={styles.containerBotaoMais}>
-            <TouchableOpacity onPress={() => {this.adicionarFoto()}}>
-              <Image 
-                style={[styles.botaoMais]}
-                source = {require('../components/botaoMais.png')}
-              />
-            </TouchableOpacity>
           </View>
 
           <View style={styles.containerQRCode}>
@@ -261,60 +256,63 @@ const styles = StyleSheet.create({
     backgroundColor: '#558E9E'
   },
   foto:{
-    width: 160,
+    width: '40%',
     height: 170,
-    marginTop: 80,
+    marginTop: 40,
     borderRadius: 30
-  },
-  containerCadastro:{
-    width: 30,
-    marginTop: -45,
-    marginRight: 320
   },
   cadastro:{
     //flex: 1,
-    width: 50,
-    height: 50,
-    marginTop: -10,
-    marginBottom: 8
+    width: '53%',
+    height: '36%'
+  },
+  containerCadastro:{
+    width: '30%',
+    height: '65%',
+    marginRight: '56%',
+    marginBottom: '-105%',
+    marginTop: '-10%'
+  },
+  sobre:{
+    width: '50%',
+    height: '38%'
+  },
+  sobreContainer:{
+    marginLeft: '50%',
+    width: '30%',
+    marginLeft: '86%',
+    marginBottom: '-103%'
   },
   containerBotaoMais:{
-    width: 120,
-    height: 40
+    //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
+    height: '11.5%',
+    marginRight: '20%'
   },
   botaoMais:{
     width: 45,
     height: 45
   },
-  sobre:{
-    width: 50,
-    height: 55
-  },
-  sobreContainer:{
-    marginTop: 8,
-    marginBottom: -7,
-    marginRight: -320,
-    marginBottom: 2
-  },
   containerFoto:{
     flex: 1,
+    //marginBottom: '25%',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: 380
+    width: '90%'
   },
   containerQRCode:{
+    marginTop: '0%',
     alignItems: 'center',
     justifyContent: 'center',
     width:'90%',
     backgroundColor: '#FFFF',
     borderRadius: 20,
-    height: 410,
-    marginBottom: 50
+    height: '50%',
+    marginBottom: '15%'
   },
   containerNome:{
-    width: 24, 
-    height: 165,
-    marginBottom: -18
+    //
+    width: '13%', 
+    height: '30%'
   },
   QRCode:{
     flex:1,
@@ -322,10 +320,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textNome:{
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#FFFF',
-    width:'900%',
-    height:'170%'
+    width:'400%',
+    height:'120%',
+    marginTop: '100%'
   }
 })

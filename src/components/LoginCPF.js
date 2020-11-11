@@ -153,9 +153,9 @@ const styles = StyleSheet.create({
     marginTop: -25
   },
   logo:{
-    width: 400,
+    width: 280,
     height: 250,
-    marginTop: 80,
+    marginTop: 110,
     borderRadius: 10
   },
   input:{

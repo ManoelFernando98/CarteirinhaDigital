@@ -5,7 +5,7 @@ import LoginCPF from './LoginCPF';
 import ImagePicker from 'react-native-image-picker';
 import TouchID from 'react-native-touch-id';
 
-const QRCodeSize = Dimensions.get("window").width * 0.70;
+const QRCodeSize = Dimensions.get("window").width * 0.50;
 const options = {
   title: 'Escolha sua foto'
 }
@@ -165,7 +165,8 @@ export default class Home extends React.Component { 
 
         { url
           ?
-          <View style={styles.containerFoto} >
+          
+          <View  style={styles.containerFoto}>
           <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
@@ -173,15 +174,18 @@ export default class Home extends React.Component { 
           />
           </TouchableOpacity>
           </View>
+          
           :
-          <View style={styles.containerFoto}>
+          
+          <View  style={styles.containerFoto}>
           <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
             source ={require('../components/logoPersonagem.png')}
           />
-          </TouchableOpacity>
+           </TouchableOpacity>
           </View>
+         
         }
 
           <View style={styles.containerNome}>
@@ -192,6 +196,17 @@ export default class Home extends React.Component { 
             </Text>
           </View>
 
+
+          <View style={styles.containerBotaoMais}>
+            <TouchableOpacity onPress={() => {this.adicionarFoto()}}>
+              <Image 
+                style={[styles.botaoMais]}
+                source = {require('../components/botaoMais.png')}
+              />
+            </TouchableOpacity>
+          </View>
+
+
           <View style={styles.containerQRCode}>
           <QRCode
             style={styles.QRCode}
@@ -201,6 +216,7 @@ export default class Home extends React.Component { 
             color="black"
           />
           </View>
+
 
           {
             btKit
@@ -256,37 +272,37 @@ const styles = StyleSheet.create({
     backgroundColor: '#558E9E'
   },
   foto:{
-    width: '40%',
-    height: 170,
-    marginTop: 40,
+    width: '30%',
+    height: '67%',
+    marginTop: '30%',
     borderRadius: 30
   },
   cadastro:{
     //flex: 1,
-    width: '53%',
-    height: '36%'
+    width: '26%',
+    height: '57%'
   },
   containerCadastro:{
-    width: '30%',
-    height: '65%',
-    marginRight: '56%',
-    marginBottom: '-105%',
-    marginTop: '-10%'
+    flex: 1,
+    width: '37%',
+    marginRight: '30%',
+    marginBottom: '2%'
   },
   sobre:{
-    width: '50%',
-    height: '38%'
+    width: '34%',
+    height: '61%'
   },
   sobreContainer:{
-    marginLeft: '50%',
+    flex: 1,
+    marginLeft: '81%',
     width: '30%',
-    marginLeft: '86%',
-    marginBottom: '-103%'
+    marginBottom: '-29%'
   },
   containerBotaoMais:{
     //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
-    height: '11.5%',
-    marginRight: '20%'
+    height: '8%',
+    marginRight: '33%',
+    marginTop: '-17%'
   },
   botaoMais:{
     width: 45,
@@ -294,25 +310,23 @@ const styles = StyleSheet.create({
   },
   containerFoto:{
     flex: 1,
-    //marginBottom: '25%',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '90%'
+    width: '90%',
+    marginLeft: '5%',
   },
   containerQRCode:{
-    marginTop: '0%',
     alignItems: 'center',
     justifyContent: 'center',
-    width:'90%',
+    width:'70%',
     backgroundColor: '#FFFF',
     borderRadius: 20,
-    height: '50%',
+    height: '40%',
     marginBottom: '15%'
   },
   containerNome:{
-    //
-    width: '13%', 
-    height: '30%'
+    flexWrap: 'wrap',
+    width: '14%', 
+    height: '20%',
+    marginRight: '10%',
   },
   QRCode:{
     flex:1,
@@ -320,11 +334,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   textNome:{
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: 'bold',
     color: '#FFFF',
     width:'400%',
     height:'120%',
-    marginTop: '100%'
+    marginTop: '5%'
   }
 })

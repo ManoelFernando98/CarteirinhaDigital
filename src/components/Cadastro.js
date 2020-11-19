@@ -7,7 +7,7 @@ import { TextInputMask } from 'react-native-masked-text'
 
 export default class App extends React.Component {
 
-state = {switchValue:false}
+state = {switchValue: false}
 
   toggleSwitch = (value) => {
         this.setState({switchValue: value})
@@ -51,8 +51,10 @@ state = {switchValue:false}
   }
 
   submit(){
-    try{
       //const unmasked = this.unmaskDtNascimento.getRawValue();
+      const { params } = this.props.navigation.state;
+      const perfil = params ? params.perfil : null;
+
       let collection = {}
       collection.Nome = this.state.Nome,
       collection.RA = this.state.RA,
@@ -60,36 +62,68 @@ state = {switchValue:false}
       collection.Curso = this.state.Curso,
       collection.dtNascimento = this.state.dtNascimento,
       collection.btMonitor = this.state.switchValue
-      
-      if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
-        Alert.alert("Atenção!","Preencha todos os campos.");
+
+      var senha = collection.dtNascimento.replace(/[/]/, "").replace(/[/]/, "")
+      var dados;
+      var cpfIsValid = this.cpfField.isValid()
+      var btCadastro 
+
+      if (collection.btMonitor){
+        btCadastro = 2;
       }else{
-       fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
-        method: 'POST',
-        headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nome: collection.Nome,
-          codigo: collection.RA,
-          senha: collection.dtNascimento,
-          curso: collection.Curso,
-          cpf: collection.CPF,
-          dtNascimento: collection.dtNascimento,
-          btAdm: collection.btMonitor
-        })
-      });
-      Alert.alert("Atenção!","O cadastro foi efetuado com sucesso.");
+        btCadastro = 3;
+      }
+
+      //console.warn(btCadastro)
+      if(!cpfIsValid){
+        Alert.alert("Atenção!","o CPF digitado é inválido.");
+      }else{
+        if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
+          Alert.alert("Atenção!","Preencha todos os campos.");
+        }else{
+         fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
+          method: 'POST',
+          headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            nome: collection.Nome,
+            codigo: collection.RA,
+            senha: senha,
+            curso: collection.Curso,
+            cpf: collection.CPF,
+            dtNascimento: collection.dtNascimento,
+            perfil: collection.btMonitor
+          })
+          })
+          .then(res  => {
+            dados = res.status;
+            if (dados === 201){
+              Alert.alert("Cadastrado Realizado!","Aluno cadastrado com sucesso.");
+            }
+            if(dados === 500) {
+              Alert.alert("Atenção!","RA ou CPF já cadastrado");
+          
+            }
+          })
+      }
+
+      //Alert.alert("Atenção!","O cadastro foi efetuado com sucesso.");
+      
      }
-    }catch{
-      Alert.alert("Atenção","Houve um problema de conexão!");
-    }
+    
   }
   
 
   render(){
-  
+    const { params } = this.props.navigation.state
+    const perfil = params ? params.perfil : null;
+
+    const botaoMonitor = perfil ? perfil == 1  : false;
+
+    //console.warn(botaoMonitor);
+    //console.warn(perfil);
     return(
       <KeyboardAvoidingView style={styles.background}>
         
@@ -120,6 +154,7 @@ state = {switchValue:false}
           autoCorrect={false}
           maxLength = {14}
           onChangeText = {(text) => { this.updateValue(text, 'CPF')}}
+          ref={(ref) => this.cpfField = ref}
         />
                
         <TextInput
@@ -129,25 +164,35 @@ state = {switchValue:false}
           onChangeText = {(text) => this.updateValue(text,'Curso')}
         />
 
-        <TextInput
+        <TextInputMask
+          type={'datetime'}
+          options={{
+            format:'DD/MM/YYYY'
+          }}
           value={this.state.dtNascimento}
           style={styles.input}
           placeholder="Data de Nascimento"
           keyboardType="numeric"
           autoCorrect={false}
-          maxLength = {8}
+          maxLength = {10}
           onChangeText = {(text) => this.updateValue(text, 'dtNascimento')}
+          ref={(ref) => this.datetimeField = ref}
         />
-
-        
 
         <Text style={styles.textoMonitor}>Monitor</Text>
+  
+        {
+          botaoMonitor
+          ?
+          <Switch
+           style={styles.switch}
+           value = {this.state.switchValue}
+           onValueChange = {(switchValue)=>this.setState({switchValue})}
+          />
+          :
+          false
+        }
         
-        <Switch
-         style={styles.switch}
-         value = {this.state.switchValue}
-         onValueChange = {(switchValue)=>this.setState({switchValue})}
-        />
 
         <TouchableOpacity
           style={styles.botao}

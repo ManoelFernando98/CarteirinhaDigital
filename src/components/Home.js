@@ -151,17 +151,17 @@ export default class Home extends React.Component { 
   render(){
     const { params } = this.props.navigation.state;
     const nome = params ? params.nome : null;
-    const btAdm = params ? params.btAdm : null;
+    const perfil = params ? params.perfil : null;
     const ra = params ? params.ra : null;
     const curso = params ? params.curso : null;
     const url = params ? params.url : null;
     const btKit = params ? params.btKit : null;
 
-    //const raString = ra ? ra.toString() : "";
+    const btCadastro = perfil ? (perfil == 1 || perfil == 2) : false;
 
-    //console.warn(url);
+    //console.warn(btCadastro);
 	  return (
-        <View style={styles.background}>  
+      <View style={styles.background}>  
 
         { url
           ?
@@ -238,25 +238,28 @@ export default class Home extends React.Component { 
           }
           
 
-          {
-            btAdm
-            ?
-            <View style={[styles.containerCadastro]}>
-              <TouchableOpacity onPress={() => {this.props.navigation.navigate('Cadastro')}}>
-              <Image
-              style={[styles.cadastro]}
-              source = {require('../components/Cadastro.png')}
-              />
-            </TouchableOpacity>
-            </View>
-            :
-            <View style={[styles.containerCadastro]}>
-              <View style={[styles.cadastro]}>
-              </View>  
-            </View>
-          }
-          
-        
+         {
+           btCadastro
+           ?
+           <View style={[styles.containerCadastro]}>
+            <TouchableOpacity onPress={() => {
+              this.props.navigation.navigate(
+                'Cadastro', {
+                  perfil: perfil, 
+                }
+            )}}>
+            <Image
+            style={[styles.cadastro]}
+            source = {require('../components/Cadastro.png')}
+            />
+          </TouchableOpacity>
+          </View>
+          :
+          <View style={[styles.containerCadastro]}> 
+           <View style={[styles.cadastro]}>
+           </View>
+          </View>
+        }
 
       </View>
   );
@@ -270,12 +273,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#558E9E'
-  },
-  foto:{
-    width: '30%',
-    height: '57%',
-    marginTop: '32%',
-    borderRadius: 30
   },
   cadastro:{
     //flex: 1,
@@ -308,19 +305,30 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45
   },
+  foto:{
+    width: '30%',
+    height: '73%',
+    marginTop: '22%',
+    borderRadius: 20
+  },
   containerFoto:{
     flex: 1,
     width: '90%',
     marginLeft: '5%',
   },
+    QRCode:{
+    flex:1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   containerQRCode:{
     alignItems: 'center',
     justifyContent: 'center',
-    width:'70%',
     backgroundColor: '#FFFF',
     borderRadius: 20,
+    width:'70%',
     height: '40%',
-    marginBottom: '15%'
+    marginBottom: '15%',
   },
   containerNome:{
     flexWrap: 'wrap',
@@ -328,17 +336,12 @@ const styles = StyleSheet.create({
     height: '26%',
     marginRight: '10%',
   },
-  QRCode:{
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   textNome:{
     fontSize: 15,
     fontWeight: 'bold',
     color: '#FFFF',
     width:'400%',
     height:'120%',
-    marginTop: '5%'
+    marginTop: '-20%'
   }
 })

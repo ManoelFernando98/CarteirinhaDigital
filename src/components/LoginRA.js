@@ -2,7 +2,7 @@ import { toDataURL } from 'qrcode';
 import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
-import NativeDialogManagerAndroid from 'react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid';
+
 
 
 export default class App extends Component{
@@ -57,15 +57,16 @@ export default class App extends Component{
       .then(() => {
         //console.warn(collection.RA);
         if(collection.RA == ra && collection.Senha == senha){
-          this.props.navigation.navigate('Home',  {
-            id: dadosUsuario.usuario[0]._id,
-            nome: dadosUsuario.usuario[0].nome,  
-            ra: dadosUsuario.usuario[0].codigo,  
-            curso: dadosUsuario.usuario[0].curso,  
-            btAdm: dadosUsuario.usuario[0].btAdm, 
-            url: dadosUsuario.usuario[0].url,   
-            btKit:dadosUsuario.usuario[0].btKit
-        }); 
+          this.props.navigation.navigate(
+            'Home',  {
+              id: dadosUsuario.usuario[0]._id,
+              nome: dadosUsuario.usuario[0].nome,  
+              ra: dadosUsuario.usuario[0].codigo,  
+              curso: dadosUsuario.usuario[0].curso,  
+              perfil: dadosUsuario.usuario[0].perfil, 
+              url: dadosUsuario.usuario[0].url,   
+              btKit:dadosUsuario.usuario[0].btKit
+          });
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }

@@ -1,7 +1,6 @@
 import { toDataURL } from 'qrcode';
 import React, {Component, useState, useEffect} from 'react';
 import { Alert, KeyboardAvoidingView ,Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
-import { PanGestureHandler } from 'react-native-gesture-handler';
 
 
 
@@ -12,10 +11,17 @@ export default class App extends Component{
     Alert.alert("Atenção","Digite seu CPF");
   }
 
+  exibirSenha = () => {
+    this.setState({
+      secureTextEntry: !this.state.secureTextEntry
+  });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-        data: []
+        data: [],
+        secureTextEntry: true
     };
   }
 
@@ -67,6 +73,8 @@ export default class App extends Component{
               url: dadosUsuario.usuario[0].url,   
               btKit:dadosUsuario.usuario[0].btKit
           });
+          this.textInputRA.clear();
+          this.textInputSenha.clear();
         }else{
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
         }
@@ -113,18 +121,31 @@ export default class App extends Component{
           placeholder="RA"
           onChangeText={(text) => this.updateValue(text, 'RA')}
           maxLength={6}
+          ref={input => { this.textInputRA = input }}
         />
-  
-        <TextInput
+        
+          
+        <TextInput {...this.props}
           style={styles.input}
-          secureTextEntry={true}
+          secureTextEntry={this.state.secureTextEntry}
           placeholder="Senha"
           keyboardType="numeric"
           autoCorrect={false}
           onChangeText = {(text) => this.updateValue(text, 'Senha')}
           maxLength={8}
+          ref={input => { this.textInputSenha = input }}
         />
-  
+        
+        <View style={styles.containerSenha}>
+        <TouchableOpacity onPress={() => {this.exibirSenha()}}>
+          <Image
+            style={[ styles.senha]}
+            source ={require('../components/senha.png')}
+          />
+        </TouchableOpacity>
+        </View>
+       
+
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {this.submit()}}
@@ -149,6 +170,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0000'
+  },
+  containerSenha:{
+    height: '20%',
+    marginLeft: '79%',
+    marginBottom: '5%',
+    marginTop: '-10%'
+  },
+  senha:{
+    width: 30,
+    height: 30
   },
   containerLogo:{
     flex: 1,
@@ -180,11 +211,10 @@ const styles = StyleSheet.create({
   input:{
     borderColor: 'navy',
     width: '90%',
-    marginBottom: 15,
     fontSize: 17,
     borderRadius: 10,
     padding: 10,
-    marginTop: -10,
+    marginTop: 5,
     height: 42,
     backgroundColor: '#fff',
     borderWidth: 1,
@@ -197,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -10
+    marginTop: 5
   },
   botaoText:{
     fontSize: 25,

@@ -50,6 +50,10 @@ state = {switchValue: false}
     }
   }
 
+  clearTextInput = () => { 
+    
+  }
+
   submit(){
       //const unmasked = this.unmaskDtNascimento.getRawValue();
       const { params } = this.props.navigation.state;
@@ -63,51 +67,63 @@ state = {switchValue: false}
       collection.dtNascimento = this.state.dtNascimento,
       collection.btMonitor = this.state.switchValue
 
-      var senha = collection.dtNascimento.replace(/[/]/, "").replace(/[/]/, "")
-      var dados;
-      var cpfIsValid = this.cpfField.isValid()
-      var btCadastro 
-
+      var btCadastro
+      
       if (collection.btMonitor){
         btCadastro = 2;
       }else{
         btCadastro = 3;
       }
 
-      //console.warn(btCadastro)
-      if(!cpfIsValid){
-        Alert.alert("Atenção!","o CPF digitado é inválido.");
+      if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null || collection.dtNascimento == null) {
+        Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
-        if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null ) {
-          Alert.alert("Atenção!","Preencha todos os campos.");
+        var senha = collection.dtNascimento.replace(/[/]/, "").replace(/[/]/, "")
+        var dados;
+        var cpfIsValid = this.cpfField.isValid()
+        //console.warn(senha);
+
+        if(!cpfIsValid){
+          Alert.alert("Atenção!","o CPF digitado é inválido.");
         }else{
-         fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
-          method: 'POST',
-          headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            nome: collection.Nome,
-            codigo: collection.RA,
-            senha: senha,
-            curso: collection.Curso,
-            cpf: collection.CPF,
-            dtNascimento: collection.dtNascimento,
-            perfil: collection.btMonitor
-          })
-          })
-          .then(res  => {
-            dados = res.status;
-            if (dados === 201){
-              Alert.alert("Cadastrado Realizado!","Aluno cadastrado com sucesso.");
-            }
-            if(dados === 500) {
-              Alert.alert("Atenção!","RA ou CPF já cadastrado");
-          
-            }
-          })
+        
+           fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
+            method: 'POST',
+            headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              nome: collection.Nome,
+              codigo: collection.RA,
+              senha: senha,
+              curso: collection.Curso,
+              cpf: collection.CPF,
+              dtNascimento: collection.dtNascimento,
+              perfil: collection.btMonitor
+            })
+            })
+            .then(res  => {
+              dados = res.status;
+              if (dados === 201){
+                Alert.alert("Cadastrado Realizado!","Aluno cadastrado com sucesso.");
+                this.textInputRA.clear();
+                this.textInputNome.clear();
+                this.textInputCurso.clear();
+                this.setState({
+                  CPF: '',
+                  dtNascimento: ''
+                })
+              }
+              if(dados === 500) {
+                Alert.alert("Atenção!","RA ou CPF já cadastrado");
+            
+              }
+            })
       }
+      //console.warn(btCadastro)
+      
+      
 
       //Alert.alert("Atenção!","O cadastro foi efetuado com sucesso.");
       
@@ -134,6 +150,7 @@ state = {switchValue: false}
           autoCorrect={false}
           placeholder="Nome"
           onChangeText={(text) => this.updateValue(text,'Nome')}
+          ref={input => { this.textInputNome = input }}
         />
   
         <TextInput
@@ -143,6 +160,7 @@ state = {switchValue: false}
           autoCorrect={false}
           maxLength = {6}
           onChangeText = {(text) => this.updateValue(text,'RA')}
+          ref={input => { this.textInputRA = input }}
         />
   
         <TextInputMask
@@ -154,7 +172,7 @@ state = {switchValue: false}
           autoCorrect={false}
           maxLength = {14}
           onChangeText = {(text) => { this.updateValue(text, 'CPF')}}
-          ref={(ref) => this.cpfField = ref}
+          ref={input => { this.cpfField = input }}
         />
                
         <TextInput
@@ -162,6 +180,7 @@ state = {switchValue: false}
           placeholder="Curso"
           autoCorrect={false}
           onChangeText = {(text) => this.updateValue(text,'Curso')}
+          ref={input => { this.textInputCurso = input }}
         />
 
         <TextInputMask
@@ -176,19 +195,23 @@ state = {switchValue: false}
           autoCorrect={false}
           maxLength = {10}
           onChangeText = {(text) => this.updateValue(text, 'dtNascimento')}
-          ref={(ref) => this.datetimeField = ref}
+          ref={input=> {this.datetimeField = input}}
         />
 
-        <Text style={styles.textoMonitor}>Monitor</Text>
+        
   
         {
           botaoMonitor
           ?
+          <View>
+          <Text style={styles.textoMonitor}>Monitor</Text>
+
           <Switch
            style={styles.switch}
            value = {this.state.switchValue}
            onValueChange = {(switchValue)=>this.setState({switchValue})}
           />
+          </View>
           :
           false
         }

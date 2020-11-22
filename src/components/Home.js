@@ -22,9 +22,9 @@ export default class Home extends React.Component { 
     }
   }
 
-  /*clicou = () => {
-    //Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
-  }*/
+  clicou = () => {
+    Alert.alert("Sobre","Desenvolvedores:\n Daniel Alexandre Carneiro\n Manoel Fernando T. Lopes Conceição \n Thomas Tavares Dias ");
+  }
 
   handleLogin = () => {
     const { params } = this.props.navigation.state
@@ -150,6 +150,7 @@ export default class Home extends React.Component { 
 
   render(){
     const { params } = this.props.navigation.state;
+    const id = params ? params.id : null;
     const nome = params ? params.nome : null;
     const perfil = params ? params.perfil : null;
     const ra = params ? params.ra : null;
@@ -162,28 +163,40 @@ export default class Home extends React.Component { 
     //console.warn(btCadastro);
 	  return (
       <View style={styles.background}>  
-
+        <View style={styles.containerTrocaSenha}>
+      
+          <TouchableOpacity onPress={() => {
+              this.props.navigation.navigate(
+                'Senha', {
+                  id: id, 
+                }
+            )}}>
+          <Image
+            style={[styles.trocaSenha]}
+            source ={require('../components/trocaSenha.png')}
+          />
+          </TouchableOpacity>
+        
+        </View>
+       
+        
         { url
           ?
           
           <View  style={styles.containerFoto}>
-          <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
             source ={{uri: url}}
           />
-          </TouchableOpacity>
           </View>
           
           :
           
           <View  style={styles.containerFoto}>
-          <TouchableOpacity onPress={() => {this.adicionarFoto()}} >
           <Image
             style={[styles.foto]}
             source ={require('../components/logoPersonagem.png')}
           />
-           </TouchableOpacity>
           </View>
          
         }
@@ -196,6 +209,7 @@ export default class Home extends React.Component { 
             </Text>
           </View>
 
+          
 
           <View style={styles.containerBotaoMais}>
             <TouchableOpacity onPress={() => {this.adicionarFoto()}}>
@@ -276,8 +290,8 @@ const styles = StyleSheet.create({
   },
   cadastro:{
     //flex: 1,
-    width: '28%',
-    height: '57%'
+    width: '29%',
+    height: '65%'
   },
   containerCadastro:{
     flex: 1,
@@ -287,34 +301,43 @@ const styles = StyleSheet.create({
   },
   sobre:{
     width: '34%',
-    height: '61%'
+    height: '70%'
   },
   sobreContainer:{
     flex: 1,
     marginLeft: '81%',
-    width: '30%',
-    marginBottom: '-31%'
+    width: '35%',
+    marginBottom: '-25%'
   },
   containerBotaoMais:{
     //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
     height: '10%',
-    marginRight: '35%',
+    marginRight: '32%',
     marginTop: '-32%'
   },
   botaoMais:{
     width: 45,
     height: 45
   },
+  containerTrocaSenha:{
+    height: '1%',
+    marginLeft: '58%',
+    marginTop: '10%'
+  },
+  trocaSenha:{
+    width: 45,
+    height: 45
+  },
   foto:{
-    width: '30%',
-    height: '73%',
+    width: '32%',
+    height: '115%',
     marginTop: '22%',
     borderRadius: 20
   },
   containerFoto:{
     flex: 1,
     width: '90%',
-    marginLeft: '5%',
+    marginLeft: '2%',
   },
     QRCode:{
     flex:1,

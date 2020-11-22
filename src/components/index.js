@@ -5,6 +5,7 @@ import LoginCPF from './LoginCPF';
 import LoginRA from './LoginRA';
 import Home from './Home';
 import Cadastro from './Cadastro';
+import Senha from './Senha';
 import { Button } from 'react-native';
 
 const MainNav = createStackNavigator (
@@ -33,6 +34,12 @@ const MainNav = createStackNavigator (
           headerTitle: 'Cadastro'
         }
       },
+      Senha: {
+        screen: Senha,
+        navigationOptions:{
+          headerTitle: 'Alterar Senha'
+        }
+      }
   }
 )
 

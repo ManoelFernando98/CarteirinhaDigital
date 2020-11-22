@@ -8,10 +8,17 @@ export default class LoginCPF extends React.Component{
     Alert.alert("Atenção","Digite seu RA");
   }
 
+  exibirSenha = () => {
+    this.setState({
+      secureTextEntry: !this.state.secureTextEntry
+  });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-        data: []
+        data: [],
+        secureTextEntry: true
     };
   }
 
@@ -32,41 +39,46 @@ export default class LoginCPF extends React.Component{
     collection.CPF = this.state.CPF,
     collection.Senha = this.state.Senha
     //console.warn(collection);
-    var cpf;
     var senha;
     var dadosUsuario;
-
+    var dados;
+    var usuario;
+    //console.warn(collection.CPF);
     if (collection.CPF == null || collection.Senha == null ) {
       Alert.alert("Atenção!","Preencha CPF e Senha para continuar");
     } else{
       var url = "https://kcontrol-api.herokuapp.com/usuarios/cpf/" + collection.CPF;
+      
       fetch(url)
-      .then(res => res.json()) //45589876652
+      .then(res => res.json())
       .then(data => (
         dadosUsuario = data,
-        cpf = data.usuario[0].cpf,
-        senha = data.usuario[0].senha
-        ))
-      .then(() => {
-        if(collection.CPF == cpf && collection.Senha == senha){
-          this.props.navigation.navigate('Home',  {
-            id: dadosUsuario.usuario[0]._id,
-            nome: dadosUsuario.usuario[0].nome,  
-            ra: dadosUsuario.usuario[0].codigo,  
-            curso: dadosUsuario.usuario[0].curso,  
-            btAdm: dadosUsuario.usuario[0].btAdm, 
-            url: dadosUsuario.usuario[0].url,
-            btKit:dadosUsuario.usuario[0].btKit  
-          });
-        }else{
+        usuario = data.usuario
+      ))
+      .then( () => {
+        if(usuario.length == 0){
           Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+        }else{
+          if(usuario[0].cpf == collection.CPF && usuario[0].senha == collection.Senha){
+            this.props.navigation.navigate(
+              'Home',  {
+                id: dadosUsuario.usuario[0]._id,
+                nome: dadosUsuario.usuario[0].nome,  
+                ra: dadosUsuario.usuario[0].codigo,  
+                curso: dadosUsuario.usuario[0].curso,  
+                perfil: dadosUsuario.usuario[0].perfil, 
+                url: dadosUsuario.usuario[0].url,   
+                btKit:dadosUsuario.usuario[0].btKit
+            });
+            this.textInputSenha.clear();
+            this.setState({
+              CPF: ''
+            })
+          }else{
+            Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
+          }
         }
       })
-      .catch(function(error){
-        Alert.alert("Atenção","Houve um problema com o login, verifique suas credenciais!");
-        //console.warn('There has been a problem with your fetch operation:' + error.message)
-      }
-      );
       //console.warn(cpf);
       //console.warn(cpf);
      
@@ -94,18 +106,30 @@ export default class LoginCPF extends React.Component{
           placeholder="CPF"
           onChangeText={(text) => this.updateValue(text,'CPF')}
           maxLength={14}
+          ref={input => { this.textInputCPF = input }}
         />
   
-        <TextInput
+        <TextInput {...this.props}
           style={styles.input}
-          secureTextEntry={true}
+          secureTextEntry={this.state.secureTextEntry}
           placeholder="Senha"
           keyboardType="numeric"
           autoCorrect={false}
-          onChangeText={(text) => this.updateValue(text,'Senha')}
+          onChangeText = {(text) => this.updateValue(text, 'Senha')}
           maxLength={8}
+          ref={input => { this.textInputSenha = input }}
         />
   
+      <View style={styles.containerSenha}>
+        <TouchableOpacity onPress={() => {this.exibirSenha()}}>
+          <Image
+            style={[ styles.senha]}
+            source ={require('../components/senha.png')}
+          />
+        </TouchableOpacity>
+        </View>
+       
+ 
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {this.submit()}}
@@ -130,6 +154,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0000'
+  },
+  containerSenha:{
+    height: '20%',
+    marginLeft: '79%',
+    marginBottom: '5%',
+    marginTop: '-10%'
+  },
+  senha:{
+    width: 30,
+    height: 30
   },
   containerLogo:{
     flex: 1,
@@ -161,11 +195,10 @@ const styles = StyleSheet.create({
   input:{
     borderColor: 'navy',
     width: '90%',
-    marginBottom: 15,
     fontSize: 17,
     borderRadius: 10,
     padding: 10,
-    marginTop: -10,
+    marginTop: 5,
     height: 42,
     backgroundColor: '#fff',
     borderWidth: 1,
@@ -178,7 +211,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: -10
+    marginTop: 5
   },
   botaoText:{
     fontSize: 25,

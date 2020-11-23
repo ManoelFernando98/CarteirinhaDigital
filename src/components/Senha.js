@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
         width:'90%'
       },
     containerSenha:{
-      height: '10%',
+      height: '9%',
       marginLeft: '79%'
     },
     senha:{

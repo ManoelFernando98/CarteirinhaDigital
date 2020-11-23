@@ -31,7 +31,7 @@ export default class Home extends React.Component { 
     const ra = params ? params.ra : null;
     const id = params ? params.id : null;
     const idDigital = true;
-    
+    var dados;
    /* TouchID.isSupported()
     .then(sucesso => {
       setSupported(true);
@@ -51,7 +51,7 @@ export default class Home extends React.Component { 
       // envio do resultado p API aqui
       //const idDigital = true;
       //console.warn(idDigital);
-      Alert.alert("Atenção", "Digital reconhecida. Verifique seu kit com o monitor.");
+      
       fetch('https://kcontrol-api.herokuapp.com/usuarios/' + id , {
         method: 'PATCH',
         headers:  {
@@ -66,6 +66,15 @@ export default class Home extends React.Component { 
             }
           ]
           )
+        })
+        .then(res => {
+          dados = res.status;
+          if (dados === 200){
+            Alert.alert("Sucesso!", "Digital reconhecida. Verifique seu kit com o monitor.");
+          }
+          if(dados == 500){
+            Alert.alert("Atenção!", "Ocorreu um erro. Tente novamente mais tarde.");
+          }
         })
 
     })
@@ -126,6 +135,12 @@ export default class Home extends React.Component { 
           ]
         )
         })
+        .then(res =>{
+          dados = res.status;
+          if (dados === 200){
+            Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso. Saia do aplicativo e entre novamente para atualizar a foto!");
+          }
+        })
         
         /*
         var urlAPI;
@@ -142,7 +157,6 @@ export default class Home extends React.Component { 
         
         */
        
-        Alert.alert("Atenção!","O cadastro da foto foi efetuado com sucesso. Saia do aplicativo e entre novamente para atualizar a foto!");
         
       }
     });
@@ -290,8 +304,8 @@ const styles = StyleSheet.create({
   },
   cadastro:{
     //flex: 1,
-    width: '29%',
-    height: '65%'
+    width: '30%',
+    height: '68%'
   },
   containerCadastro:{
     flex: 1,
@@ -300,14 +314,14 @@ const styles = StyleSheet.create({
     marginBottom: '-1%'
   },
   sobre:{
-    width: '34%',
-    height: '70%'
+    width: '36%',
+    height: '85%'
   },
   sobreContainer:{
     flex: 1,
-    marginLeft: '81%',
-    width: '35%',
-    marginBottom: '-25%'
+    marginLeft: '80%',
+    width: '33%',
+    marginBottom: '-22%'
   },
   containerBotaoMais:{
     //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
@@ -325,13 +339,13 @@ const styles = StyleSheet.create({
     marginTop: '10%'
   },
   trocaSenha:{
-    width: 45,
-    height: 45
+    width: 40,
+    height: 40
   },
   foto:{
     width: '32%',
     height: '115%',
-    marginTop: '22%',
+    marginTop: '10%',
     borderRadius: 20
   },
   containerFoto:{

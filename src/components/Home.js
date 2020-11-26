@@ -324,7 +324,6 @@ const styles = StyleSheet.create({
     marginBottom: '-22%'
   },
   containerBotaoMais:{
-    //width: -800, //voltar aqui depois de alterar o tamanho do campo foto
     height: '10%',
     marginRight: '32%',
     marginTop: '-32%'

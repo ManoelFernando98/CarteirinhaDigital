@@ -92,7 +92,7 @@ export default class App extends React.Component {
                 <TextInput {...this.props}
                     style={styles.input}
                     secureTextEntry={this.state.secureTextEntry}
-                    placeholder="Senha"
+                    placeholder="Nova Senha"
                     keyboardType="numeric"
                     autoCorrect={false}
                     onChangeText = {(text) => this.updateValue(text, 'Senha')}
@@ -115,7 +115,7 @@ export default class App extends React.Component {
                 <TextInput {...this.props}
                     style={styles.input}
                     secureTextEntry={this.state.secureTextEntry}
-                    placeholder="Senha"
+                    placeholder="Confirmar Senha"
                     keyboardType="numeric"
                     autoCorrect={false}
                     onChangeText = {(text) => this.updateValue(text, 'SenhaConfirmada')}
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     },
   
     input:{
-      borderColor: 'navy',
+      borderColor: '#558E9E',
       width: '90%',
       fontSize: 17,
       borderRadius: 10,

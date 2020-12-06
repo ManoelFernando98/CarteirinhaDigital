@@ -7,11 +7,26 @@ import { TextInputMask } from 'react-native-masked-text'
 
 export default class App extends React.Component {
 
-state = {switchValue: false}
+  state = {
+    switchValue: false,
+    switchAdmValue: false
+  }
+
 
   toggleSwitch = (value) => {
-        this.setState({switchValue: value})
-        console.warn(value);
+      this.setState({
+        switchValue: value,
+        switchAdmValue: switchValue
+      })
+      //console.warn(value);
+  }
+
+  toggleSwitchAdm = (value) => {
+      this.setState({
+        switchAdmValue: value,
+        switchValue: switchAdmValue
+      })
+    //console.warn(value);
   }
   
   clicou = () => {
@@ -50,10 +65,6 @@ state = {switchValue: false}
     }
   }
 
-  clearTextInput = () => { 
-    
-  }
-
   submit(){
       //const unmasked = this.unmaskDtNascimento.getRawValue();
       const { params } = this.props.navigation.state;
@@ -65,16 +76,22 @@ state = {switchValue: false}
       collection.CPF = this.state.CPF,
       collection.Curso = this.state.Curso,
       collection.dtNascimento = this.state.dtNascimento,
-      collection.btMonitor = this.state.switchValue
+      collection.btMonitor = this.state.switchValue,
+      collection.btAdm = this.state.switchAdmValue
+
+      //console.warn(this.state.switchAdmValue)
 
       var btCadastro
       
-      if (collection.btMonitor){
+      if (collection.btMonitor && !collection.btAdm){ //Monitor
         btCadastro = 2;
-      }else{
+      }else if((!collection.btMonitor && collection.btAdm) || (collection.btMonitor && collection.btAdm)){ //Master
+        btCadastro = 1;
+      }else if(!collection.btMonitor && !collection.btAdm){ //Aluno
         btCadastro = 3;
       }
 
+      //console.warn(btCadastro)
       if (collection.Nome == null || collection.RA == null || collection.CPF == null ||collection.Curso == null || collection.dtNascimento == null) {
         Alert.alert("Atenção!","Preencha todos os campos.");
       }else{
@@ -84,7 +101,7 @@ state = {switchValue: false}
         //console.warn(senha);
 
         if(!cpfIsValid){
-          Alert.alert("Atenção!","o CPF digitado é inválido.");
+          Alert.alert("Atenção!","O CPF digitado é inválido.");
         }else{
         
            fetch('https://kcontrol-api.herokuapp.com/usuarios/', {
@@ -100,7 +117,7 @@ state = {switchValue: false}
               curso: collection.Curso,
               cpf: collection.CPF,
               dtNascimento: collection.dtNascimento,
-              perfil: collection.btMonitor
+              perfil: btCadastro
             })
             })
             .then(res  => {
@@ -112,11 +129,13 @@ state = {switchValue: false}
                 this.textInputCurso.clear();
                 this.setState({
                   CPF: '',
-                  dtNascimento: ''
+                  dtNascimento: '',
+                  switchValue: false,
+                  switchAdmValue: false
                 })
               }
               if(dados === 500) {
-                Alert.alert("Atenção!","RA ou CPF já cadastrado");
+                Alert.alert("Atenção!","RA ou CPF já cadastrado.");
             
               }
             })
@@ -138,6 +157,7 @@ state = {switchValue: false}
 
     const botaoMonitor = perfil ? perfil == 1  : false;
 
+   
     //console.warn(botaoMonitor);
     //console.warn(perfil);
     return(
@@ -204,17 +224,30 @@ state = {switchValue: false}
           botaoMonitor
           ?
           <View>
+          <View>
           <Text style={styles.textoMonitor}>Monitor</Text>
 
           <Switch
            style={styles.switch}
-           value = {this.state.switchValue}
+           value = {this.state.switchValue} 
            onValueChange = {(switchValue)=>this.setState({switchValue})}
           />
+          </View>
+
+          <View>
+            <Text style={styles.textoMonitor}>Master</Text>
+
+            <Switch
+            style={styles.switchAdministrador}
+            value = {this.state.switchAdmValue} 
+            onValueChange = {(switchAdmValue)=>this.setState({switchAdmValue})}
+            />
+          </View>
           </View>
           :
           false
         }
+        
         
 
         <TouchableOpacity
@@ -265,7 +298,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   input:{
-    borderColor: 'navy',
+    borderColor: '#558E9E',
     width: '90%',
     marginBottom: 15,
     fontSize: 14,
@@ -303,7 +336,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 280,
+    marginBottom:10
+  },
+  textoAdministrador:{
+    fontSize: 20,
+    color: '#558E9E',
+    fontWeight: 'bold',
+    marginBottom: -10,
+    marginRight: 250
+  },
+  switchAdministrador:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 280,
     marginBottom:20
-  }
+  },
 
 });

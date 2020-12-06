@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   input:{
-    borderColor: 'navy',
+    borderColor: '#558E9E',
     width: '90%',
     fontSize: 17,
     borderRadius: 10,
